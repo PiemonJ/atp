@@ -9,8 +9,7 @@ import com.bytedance.atp.domain.model.group.Rule;
 import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.runtime.*;
 import io.reactivex.Flowable;
-import io.reactivex.subjects.Subject;
-import org.reactivestreams.Publisher;
+import io.reactivex.processors.PublishProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -37,7 +36,7 @@ public class Compiler {
 
     //Hot Stream
     @Autowired
-    public Subject<FlowMeddleEvent> meddle;
+    public PublishProcessor<FlowMeddleEvent> meddle;
 
     @Autowired
     public ApplicationEventPublisher bus;

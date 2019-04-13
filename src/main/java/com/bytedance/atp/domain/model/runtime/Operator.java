@@ -44,6 +44,8 @@ public class Operator {
     }
 
     public Tuple2<Object,Boolean> action() {
-        return Tuple2.apply(null,true);
+
+        return validator.validate(info);
+
     }
 }

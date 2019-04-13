@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -26,6 +29,8 @@ public class OperatorChain {
 
     Operator current;
 
+    private List<Operator> operators;
+
     public static OperatorChain newInstance(){
 
         Operator thimble = Operator.thimble();
@@ -37,25 +42,78 @@ public class OperatorChain {
         return operatorChain;
     }
 
+    public OperatorChainIterator iterator(){
+        if (!atomic.get()){
+            //Init
+            operators = recursion(new ArrayList<Operator>(),source);
+        }
+        return new OperatorChainIterator(operators);
 
-    public boolean hasNext(){
-        if (current == null)
-            current = source;
 
-        return current.next.isPresent();
     }
 
-    public Operator next(){
 
-        current = source.next.get();
-        return current;
+    /**
+     *
+     * @param ops
+     * @param op
+     */
+    private List<Operator> recursion(List<Operator> ops,Operator op){
+        if (op.next.isPresent()){
+            Operator next = op.next.get();
+            ops.add(next);
+            recursion(ops, next);
+        }
+        return ops;
     }
+
+
+//    private boolean hasNext(){
+//        if (current == null)
+//            current = source;
+//
+//        return current.next.isPresent();
+//    }
+//
+//    private Operator next(){
+//
+//        current = source.next.get();
+//        return current;
+//    }
 
     public Operator last(){
-        while (hasNext()){
-            next();
+        return recursion(source);
+
+    }
+
+    public Operator recursion(Operator op){
+
+        if (op.next.isPresent()){
+            return recursion(op.next.get());
+        } else {
+            return op;
         }
-        return current;
+
+    }
+
+    public class OperatorChainIterator{
+
+        List<Operator> operators;
+
+        Iterator<Operator> iterator;
+
+        public OperatorChainIterator(List<Operator> operators) {
+            this.operators = operators;
+            iterator = operators.iterator();
+        }
+
+        public boolean hasNext(){
+            return iterator.hasNext();
+        }
+
+        public Operator next(){
+            return iterator.next();
+        }
     }
 
 
