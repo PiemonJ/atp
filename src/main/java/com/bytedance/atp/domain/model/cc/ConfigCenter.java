@@ -1,6 +1,7 @@
 package com.bytedance.atp.domain.model.cc;
 
 import com.bytedance.atp.domain.model.AggregateRoot;
+import com.bytedance.atp.domain.model.common.Category;
 import com.bytedance.atp.domain.model.group.RuleCategory;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class ConfigCenter extends AggregateRoot {
 
     public CodeInfo codeInfo;
 
-    public Info obtainConfigInfo(RuleCategory category){
+    public Info obtainConfigInfo(Category category){
 
         switch (category){
             case CODE:
