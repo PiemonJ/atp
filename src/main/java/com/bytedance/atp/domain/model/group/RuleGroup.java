@@ -12,4 +12,11 @@ public class RuleGroup extends AggregateRoot {
     public List<Rule> rules;
 
 
+
+    public RuleGroup(GroupIdentifier identifier, List<Rule> rules) {
+        this.identifier = identifier;
+        this.rules = rules;
+    }
+
+
 }

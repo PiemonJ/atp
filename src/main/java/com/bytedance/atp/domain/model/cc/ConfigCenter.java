@@ -2,10 +2,13 @@ package com.bytedance.atp.domain.model.cc;
 
 import com.bytedance.atp.domain.model.AggregateRoot;
 import com.bytedance.atp.domain.model.group.RuleCategory;
+import lombok.Data;
 
 /**
  * 规则组的配置中心
  */
+
+@Data
 public class ConfigCenter extends AggregateRoot {
 
     public String ruleGroupId;

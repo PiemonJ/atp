@@ -1,5 +1,8 @@
 package com.bytedance.atp.domain.model;
 
+import lombok.Data;
+
+@Data
 public abstract class Entity {
     public long id;
 
@@ -44,15 +47,4 @@ public abstract class Entity {
 
     }
 
-    public long getId() {
-
-        return id;
-
-    }
-
-    public void setId(long id) {
-
-        this.id = id;
-
-    }
 }

@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @AllArgsConstructor
 public class OperatorChain {
 
-    public AtomicBoolean atomic;
+    public AtomicBoolean atomic = new AtomicBoolean(false);
 
     //PS:source是一个thimble【顶针】,其不缠在任何逻辑，只占个坑
     Operator source;

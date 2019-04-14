@@ -1,11 +1,15 @@
 package com.bytedance.atp.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Setter
+@Getter
 public class AggregateRoot extends Entity {
 
-    private int version ;
+    public int version ;
 
-    private List<DomainEvent> events = new ArrayList<>();
+    public List<DomainEvent> events = new ArrayList<>();
 }

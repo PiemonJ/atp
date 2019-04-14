@@ -68,6 +68,8 @@ public class Flow {
      * 将执行的逻辑，委派到状态上
      */
     public void run(){
+        stateChanger(State.READY,State.RUNNING);
+
         try {
             OperatorChain.OperatorChainIterator iterator = chain.iterator();
             while (iterator.hasNext()){
@@ -109,6 +111,7 @@ public class Flow {
             }
         } catch (Exception e){
 
+            System.out.println(e.getCause());
         } finally {
             disposable.dispose();
         }

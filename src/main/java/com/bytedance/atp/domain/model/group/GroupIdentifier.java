@@ -1,7 +1,9 @@
 package com.bytedance.atp.domain.model.group;
 
 import com.bytedance.atp.domain.model.ValueObject;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class GroupIdentifier extends ValueObject<GroupIdentifier> {
 
     public String groupName;

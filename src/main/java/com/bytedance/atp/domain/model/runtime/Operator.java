@@ -41,11 +41,12 @@ public class Operator {
         this.validator = validator;
         this.rule = rule;
         this.info = info;
+        this.next = Optional.empty();
     }
 
     public Tuple2<Object,Boolean> action() {
 
-        return validator.validate(info);
+        return validator.ruleValidate(info);
 
     }
 }
