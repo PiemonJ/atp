@@ -10,10 +10,13 @@ import lombok.Setter;
 @Getter
 public class RuleTrapedEvent extends RuleEvent {
 
+    public Rule rule;
+
     public RuleTrapedEvent() {
     }
 
     public RuleTrapedEvent(String ruleGroupId, String flowId, Rule rule) {
-        super(ruleGroupId, flowId, rule);
+        super(ruleGroupId, flowId);
+        this.rule = rule;
     }
 }

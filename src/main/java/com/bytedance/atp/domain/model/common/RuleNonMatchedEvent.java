@@ -10,10 +10,13 @@ import lombok.Setter;
 @Getter
 public class RuleNonMatchedEvent extends RuleEvent{
 
+    public Rule rule;
+
     public RuleNonMatchedEvent() {
     }
 
     public RuleNonMatchedEvent(String ruleGroupId, String flowId, Rule rule) {
-        super(ruleGroupId, flowId, rule);
+        super(ruleGroupId, flowId);
+        this.rule = rule;
     }
 }

@@ -13,6 +13,6 @@ public class RuleEvent {
 
     public String flowId;
 
-    public Rule rule;
+
 
 }
