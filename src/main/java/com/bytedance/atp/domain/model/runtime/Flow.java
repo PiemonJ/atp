@@ -1,6 +1,7 @@
 package com.bytedance.atp.domain.model.runtime;
 
 import com.bytedance.atp.domain.model.AggregateRoot;
+import com.bytedance.atp.domain.model.cc.Env;
 import com.bytedance.atp.domain.model.common.*;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
@@ -31,6 +32,8 @@ public class Flow {
 
     public String groupId;
 
+    public Env env;
+
     //任务流执行策略
     public ExeStrategy exeStrategy;
 
@@ -45,16 +48,18 @@ public class Flow {
 
     public Disposable disposable;
 
-    public Flow(ExeStrategy exeStrategy, State state, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
+    public Flow(String groupId, Env env, State state, ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
         this.flowId = UUID.randomUUID().toString();
+        this.groupId = groupId;
+        this.env = env;
         this.exeStrategy = exeStrategy;
         this.state = new AtomicReference<>(state);
         this.chain = chain;
         this.meddle = meddle;
         this.bus = bus;
         listen();
-
     }
+
 
     public void listen(){
         disposable = meddle.filter(

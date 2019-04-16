@@ -1,4 +1,4 @@
-package com.bytedance.atp;
+package com.bytedance.atp.domain.model.cc;
 
 import com.bytedance.atp.domain.model.common.Category;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,5 +16,5 @@ public class ConfigBlock {
 
     public Category category;
 
-    public List<Configers> configers;
+    public List<Configer> configers;
 }

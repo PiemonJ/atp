@@ -1,23 +1,19 @@
-package com.bytedance.atp;
+package com.bytedance.atp.domain.model.cc;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * 配置
- *
- */
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Configer {
+public class ConfigTable {
 
-    ConfigItem item;
+    Env env;
 
-    ConfigValue value;
-
+    List<ConfigBlock> blocks;
 }

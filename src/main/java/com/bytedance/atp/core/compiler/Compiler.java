@@ -2,6 +2,7 @@ package com.bytedance.atp.core.compiler;
 
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigCenter;
+import com.bytedance.atp.domain.model.cc.Env;
 import com.bytedance.atp.domain.model.common.FlowMeddleEvent;
 import com.bytedance.atp.domain.model.common.Tuple2;
 import com.bytedance.atp.domain.model.common.Tuple3;
@@ -44,21 +45,31 @@ public class Compiler {
     /**
      * 编译器核心方法，将静态资源编译为Runtime的Flow
      */
-    public Flow compile(ExeStrategy strategy, RuleGroup group, ConfigCenter center){
-
+    public Flow compile(Env env, ExeStrategy strategy, RuleGroup group, ConfigCenter center){
 
         OperatorChain chain = Flowable.fromIterable(group.rules)
-                .map(rule -> Tuple2.apply(rule, ruleHandlerRegister.get(rule)))
-                .map(ruleAndHandler -> Tuple3.apply(ruleAndHandler, center.obtainConfigInfo(ruleAndHandler._1.category)))
-                .map(tuple3 -> new Operator(tuple3._1,tuple3._2,tuple3._3))
-                .reduce(OperatorChain.newInstance(), (chains, operator) -> {
-                    chains.last().setNext(Optional.of(operator));
-                    return chains;
-                }).blockingGet();
+                .map(rule -> Tuple2.<Rule, RuleValidator>apply(rule, ruleHandlerRegister.get(rule)))
+                .map(ruleAndValidator -> Tuple3.apply(ruleAndValidator, center.obtainConfigPile(ruleAndValidator._1, env)))
+                .map(ruleAndValidatorAndPile -> new Operator(ruleAndValidatorAndPile._1, ruleAndValidatorAndPile._2, ruleAndValidatorAndPile._3))
+                .reduce(
+                        OperatorChain.newInstance(),
+                        (chains, operator) -> {
+                            chains.last().setNext(Optional.of(operator));
+                            return chains;
+                        }
+                ).blockingGet();
+
 
         //进行验证，参数验证
 
-        return new Flow(strategy, State.READY,chain,meddle,bus);
+        return new Flow(
+                String.valueOf(group.id),
+                env,
+                State.READY,
+                strategy,
+                chain,
+                meddle,
+                bus);
     }
 
 

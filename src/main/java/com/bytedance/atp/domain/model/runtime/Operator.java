@@ -1,7 +1,7 @@
 package com.bytedance.atp.domain.model.runtime;
 
 import com.bytedance.atp.core.validator.RuleValidator;
-import com.bytedance.atp.domain.model.cc.Info;
+import com.bytedance.atp.domain.model.cc.ConfigPile;
 import com.bytedance.atp.domain.model.common.Tuple2;
 import com.bytedance.atp.domain.model.group.Rule;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class Operator {
 
     public Rule rule;
 
-    public Info info;
+    public ConfigPile pile;
 
     public Optional<Operator> next;
 
@@ -37,16 +37,16 @@ public class Operator {
     }
 
 
-    public Operator( Rule rule, RuleValidator validator, Info info) {
+    public Operator( Rule rule, RuleValidator validator, ConfigPile pile) {
         this.validator = validator;
         this.rule = rule;
-        this.info = info;
+        this.pile = pile;
         this.next = Optional.empty();
     }
 
     public Tuple2<Object,Boolean> action() {
 
-        return validator.ruleValidate(info);
+        return validator.ruleValidate(pile);
 
     }
 }

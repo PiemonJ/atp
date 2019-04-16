@@ -24,7 +24,7 @@ public class ConfigPile {
 
     public Rule rule;
 
-    public List<Configer> configers;
+    public List<Configers> configers;
 
 
 }

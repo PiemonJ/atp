@@ -1,7 +1,9 @@
 package com.bytedance.atp;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.bytedance.atp.domain.model.common.Category;
+import com.bytedance.atp.domain.model.common.Single;
 import com.bytedance.atp.domain.model.common.Weekday;
 import com.bytedance.atp.domain.model.group.Rule;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 一个配置项
@@ -28,9 +32,18 @@ public enum ConfigItem {
             10,
             "项目工程地址",
             Arrays.asList(Category.values()),
-            new TypeReference<String>(){}.getType(),
+            new TypeReference<Single<String>>(){}.getType(),
             Arrays.asList(Rule.values())
-    ),
+    ){
+        public Optional<String> convertTo(ConfigValue value){
+            List<String> values = value.getValues();
+            if (null == values || values.size() == 0){
+                return Optional.<String>empty();
+            } else {
+                return Optional.<String>of(values.get(0));
+            }
+        }
+    },
 
     /**
      * 发布相关参数
@@ -42,7 +55,20 @@ public enum ConfigItem {
             "发版合法日",
             Arrays.asList(Category.RELEASE),
             new TypeReference<List<Weekday>>(){}.getType(),
-            Arrays.asList(Rule.WINDOW_PERIOD_RELEASE)),
+            Arrays.asList(Rule.WINDOW_PERIOD_RELEASE)
+    ){
+        public Optional<List<Weekday>> convertTo(ConfigValue value){
+            List<String> values = value.getValues();
+            if (null == values || values.size() == 0){
+                return Optional.<List<Weekday>>empty();
+            } else {
+                List<Weekday> weekdays = values.stream()
+                        .map(week -> Weekday.valueOf(week))
+                        .collect(Collectors.toList());
+                return Optional.<List<Weekday>>of(weekdays);
+            }
+        }
+    },
 
 
     /**
@@ -54,8 +80,21 @@ public enum ConfigItem {
             1000,
             "代码覆盖率",
             Arrays.asList(Category.CODE),
-            new TypeReference<BigDecimal>(){}.getType(),
-            Arrays.asList(Rule.COVERAGE));
+            new TypeReference<Single<BigDecimal>>(){}.getType(),
+            Arrays.asList(Rule.COVERAGE)
+    ){
+
+        public Optional<BigDecimal> convertTo(ConfigValue value){
+            List<String> values = value.getValues();
+            if (null == values || values.size() == 0){
+                return Optional.<BigDecimal>empty();
+            } else {
+                return Optional.<BigDecimal>of(new BigDecimal(values.get(0)));
+            }
+        }
+    };
+
+
 
     public int code;
 
@@ -68,5 +107,6 @@ public enum ConfigItem {
     List<Rule> referenceRules;
 
 
+    public abstract <T> Optional<T> convertTo(ConfigValue value);
 
 }

@@ -11,10 +11,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 配置中心
@@ -30,12 +28,12 @@ public class ConfigCenter {
     List<ConfigTable> configTables = new ArrayList<>();
 
 
-    public void configApply(ConfigEnv env,List<Configer> configers){
+    public void configApply(ConfigEnv env,List<Configers> configers){
 
         ConfigTable configTable = Flowable.fromArray(Category.values())
                 .map(
                         category -> {
-                            List<Configer> collect = configers.stream()
+                            List<Configers> collect = configers.stream()
                                     .filter(configer -> configer.item.categories.contains(category))
                                     .collect(Collectors.toList());
                             return Tuple2.apply(category, collect);
@@ -44,7 +42,7 @@ public class ConfigCenter {
                 ).map(
                         tuple2 -> {
                             Category category = tuple2._1;
-                            List<Configer> confs = tuple2._2;
+                            List<Configers> confs = tuple2._2;
                             return ConfigBlock.builder()
                                     .category(category)
                                     .configers(confs)
@@ -74,7 +72,7 @@ public class ConfigCenter {
     public ConfigPile obtainConfigPile(Rule rule,ConfigEnv env){
 
 
-        List<Configer> configers = new ArrayList<>();
+        List<Configers> configers = new ArrayList<>();
 
         Optional<ConfigTable> table = this.getConfigTables()
                 .stream()
