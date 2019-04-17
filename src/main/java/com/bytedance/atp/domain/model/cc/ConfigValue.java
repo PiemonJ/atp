@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class ConfigValue {
 
     public String json;
+
+    public static ConfigValue apply(String json){
+        return new ConfigValue(json);
+    }
 }

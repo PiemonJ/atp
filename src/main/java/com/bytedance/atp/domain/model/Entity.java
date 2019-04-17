@@ -1,9 +1,12 @@
 package com.bytedance.atp.domain.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 @Data
 public abstract class Entity {
+
+    @Id
     public long id;
 
     @Override

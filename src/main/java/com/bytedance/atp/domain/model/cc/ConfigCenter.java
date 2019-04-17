@@ -9,12 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,6 +26,7 @@ import java.util.stream.Stream;
  */
 @Data
 @Builder
+@Document
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigCenter extends AggregateRoot {
@@ -32,6 +36,21 @@ public class ConfigCenter extends AggregateRoot {
 //    Env env;
 
     List<ConfigTable> configTables = new ArrayList<>();
+
+
+    public static Function<Map<ConfigScalar,String>,List<Configer>> mapping = map -> map.entrySet().stream()
+                .map(entry -> Configer.apply(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+
+
+
+
+    public void configApply(Env env, Map<ConfigScalar,String> configers){
+
+        List<Configer> cs = ConfigCenter.mapping.apply(configers);
+
+        configApply(env,cs);
+    }
 
 
     public void configApply(Env env, List<Configer> configers){
@@ -73,6 +92,7 @@ public class ConfigCenter extends AggregateRoot {
         this.configTables = tables;
 
     }
+
 
 
     public ConfigPile obtainConfigPile(Rule rule, Env env){

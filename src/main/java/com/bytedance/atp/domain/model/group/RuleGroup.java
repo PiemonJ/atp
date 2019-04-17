@@ -7,16 +7,17 @@ import java.util.List;
 
 public class RuleGroup extends AggregateRoot {
 
-    GroupIdentifier identifier;
+    GroupIdentifier groupIdentifier;
 
     public List<Rule> rules;
 
 
 
-    public RuleGroup(GroupIdentifier identifier, List<Rule> rules) {
-        this.identifier = identifier;
+    public RuleGroup(GroupIdentifier groupIdentifier, List<Rule> rules) {
+        this.groupIdentifier = groupIdentifier;
         this.rules = rules;
     }
+
 
 
 }
