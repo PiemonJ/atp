@@ -1,6 +1,8 @@
 package com.bytedance.atp.infrastructure.event;
 
+import com.bytedance.atp.application.ReportingApplicationService;
 import com.bytedance.atp.domain.model.common.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -8,10 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlowRuntimeListener {
 
+    @Autowired
+    private ReportingApplicationService reportingApplicationService;
+
     @Async
     @EventListener
     public void onnterrupted(RuleInterruptedEvent event) {
         //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        long ruleGroupId = event.getRuleGroupId();
+
 
     }
 

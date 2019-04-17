@@ -15,7 +15,7 @@ public class RuleMatchedEvent extends RuleEvent {
     public RuleMatchedEvent() {
     }
 
-    public RuleMatchedEvent(String ruleGroupId, String flowId, Rule rule) {
+    public RuleMatchedEvent(long ruleGroupId, String flowId, Rule rule) {
         super(ruleGroupId, flowId);
         this.rule = rule;
     }

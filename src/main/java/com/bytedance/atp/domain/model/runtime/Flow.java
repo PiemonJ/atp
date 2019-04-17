@@ -32,7 +32,7 @@ public class Flow {
 
     public String flowId;
 
-    public String groupId;
+    public long groupId;
 
     public Env env;
 
@@ -50,7 +50,7 @@ public class Flow {
 
     public Disposable disposable;
 
-    public Flow(String groupId, Env env, State state, ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
+    public Flow(long groupId, Env env, State state, ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
         this.flowId = UUID.randomUUID().toString();
         this.groupId = groupId;
         this.env = env;
@@ -64,11 +64,13 @@ public class Flow {
 
 
     public void listen(){
+
         disposable = meddle.filter(
-                event -> event.flowId.equals(flowId) || event.groupId.equals(groupId)
+                event -> event.getFlowId().equals(flowId) || event.getGroupId() == groupId
         ).subscribe(
-                event -> stateChanger(event.from, event.to)
+                event -> stateChanger(event.from,event.to)
         );
+
     }
 
     /**

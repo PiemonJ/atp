@@ -4,6 +4,7 @@ import com.bytedance.atp.domain.model.cc.ConfigCenter;
 import com.bytedance.atp.domain.model.cc.ConfigCenterFactory;
 import com.bytedance.atp.domain.model.cc.ConfigCenterRepository;
 import com.bytedance.atp.share.req.BuildConfigCenterReq;
+import com.bytedance.atp.share.req.RebuildConfigCenterReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,22 @@ public class ConfigCenterApplicationService {
             ConfigCenter configCenter = ConfigCenterFactory.buildConfigCenter(req.getEnv(), req.getRuleGroupId(), req.getConfiger());
 
             configCenterRepository.save(configCenter);
-        } else {
+        }
+    }
+
+
+    public void rebuildConfigCenter(RebuildConfigCenterReq req){
+
+
+        ConfigCenter cc = configCenterRepository.findOne(req.getCcId());
+
+        if (cc != null){
 
             cc.configApply(req.getEnv(),req.getConfiger());
 
             configCenterRepository.save(cc);
 
         }
+
     }
 }

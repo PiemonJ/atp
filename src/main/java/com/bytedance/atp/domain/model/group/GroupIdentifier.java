@@ -11,6 +11,14 @@ public class GroupIdentifier extends ValueObject<GroupIdentifier> {
     public String creator;
 
 
+    public GroupIdentifier copyCreator(String groupName){
+        if (groupName.equals(groupName)){
+            return this;
+        }
+        return new GroupIdentifier(groupName,creator);
+    }
+
+
     @Override
     protected boolean equalsCore(GroupIdentifier other) {
         return this.creator.equals(other.creator) && this.groupName.equals(other.groupName)

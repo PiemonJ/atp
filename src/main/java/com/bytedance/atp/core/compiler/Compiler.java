@@ -63,7 +63,7 @@ public class Compiler {
         //进行验证，参数验证
 
         return new Flow(
-                String.valueOf(group.id),
+                group.id,
                 env,
                 State.READY,
                 strategy,

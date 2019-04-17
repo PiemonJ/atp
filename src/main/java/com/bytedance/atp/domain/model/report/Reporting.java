@@ -3,6 +3,11 @@ package com.bytedance.atp.domain.model.report;
 import com.bytedance.atp.domain.model.AggregateRoot;
 import com.bytedance.atp.domain.model.common.Tuple2;
 import com.bytedance.atp.domain.model.group.Rule;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -10,9 +15,14 @@ import java.util.List;
  * 报表
  *
  */
-public class Reporting {
+@Setter
+@Getter
+@Document
+@NoArgsConstructor
+@AllArgsConstructor
+public class Reporting extends AggregateRoot{
 
-    public String ruleGroupId;
+    public long ruleGroupId;
 
     public String flowId;
 

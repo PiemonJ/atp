@@ -2,6 +2,7 @@ package com.bytedance.atp.resource;
 
 import com.bytedance.atp.application.RuleGroupApplicationService;
 import com.bytedance.atp.share.req.BuildRuleGroupReq;
+import com.bytedance.atp.share.req.RebuildRuleGroupReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,13 @@ public class RuleGroupResource {
 
     }
 
+    @PostMapping("/rebuild")
+    public String rebuildRuleGroup(RebuildRuleGroupReq req){
+
+        ruleGroupApplicationService.rebuildRuleGroup(req);
+
+        return "true";
+
+    }
 
 }

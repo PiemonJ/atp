@@ -5,6 +5,7 @@ import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.group.RuleGroupFactory;
 import com.bytedance.atp.domain.model.group.RuleGroupRepository;
 import com.bytedance.atp.share.req.BuildRuleGroupReq;
+import com.bytedance.atp.share.req.RebuildRuleGroupReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,4 +34,23 @@ public class RuleGroupApplicationService {
 
     }
 
+    public Tuple2<String,Boolean> rebuildRuleGroup(RebuildRuleGroupReq req) {
+
+        String groupName = req.getGroupName();
+
+        RuleGroup group = ruleGroupRepository.findOne(req.getRuleGroupId());
+
+        if (group != null){
+            //满足幂等
+
+            group.rebuild(groupName,req.getRules());
+
+            ruleGroupRepository.save(group);
+
+
+            return Tuple2.apply(String.valueOf(""),true);
+        }
+        return Tuple2.apply("",false);
+
+    }
 }

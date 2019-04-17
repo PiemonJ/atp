@@ -13,7 +13,7 @@ public class RuleInterruptedEvent extends RuleEvent {
     public RuleInterruptedEvent() {
     }
 
-    public RuleInterruptedEvent(String ruleGroupId, String flowId) {
+    public RuleInterruptedEvent(long ruleGroupId, String flowId) {
         super(ruleGroupId, flowId);
     }
 }

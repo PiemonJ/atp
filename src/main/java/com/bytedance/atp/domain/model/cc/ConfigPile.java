@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class ConfigPile {
 
-    public String ruleGroupId;
+    public long ruleGroupId;
 
     public Env env;
 

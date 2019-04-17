@@ -7,12 +7,11 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class BuildConfigCenterReq {
+public class RebuildConfigCenterReq {
+
+    long ccId;
 
     Env env;
 
-    long ruleGroupId;
-
     Map<ConfigScalar,String> configer;
-
 }
