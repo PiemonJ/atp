@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConfigCenterRepository extends MongoRepository<ConfigCenter, Long> {
 
-    ConfigCenter findByRuleGroupId(long ruleGroupId);
+    ConfigCenter findByRuleGroupId(String ruleGroupId);
 }

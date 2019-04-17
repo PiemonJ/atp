@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class RebuildRuleGroupReq {
 
-    long ruleGroupId;
+    String ruleGroupId;
 
     String groupName;
 

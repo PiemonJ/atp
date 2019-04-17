@@ -13,7 +13,7 @@ public class RuleTerminalEvent extends RuleEvent {
     public RuleTerminalEvent() {
     }
 
-    public RuleTerminalEvent(long ruleGroupId, String flowId) {
+    public RuleTerminalEvent(String ruleGroupId, String flowId) {
         super(ruleGroupId, flowId);
     }
 }

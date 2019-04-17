@@ -18,7 +18,7 @@ public class FlowRuntimeListener {
     public void onnterrupted(RuleInterruptedEvent event) {
         //Invoke Report Rich Method
         String flowId = event.getFlowId();
-        long ruleGroupId = event.getRuleGroupId();
+        String ruleGroupId = event.getRuleGroupId();
 
 
     }

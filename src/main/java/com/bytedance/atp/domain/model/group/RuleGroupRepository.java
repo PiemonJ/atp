@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RuleGroupRepository extends MongoRepository<RuleGroup, Long> {
+public interface RuleGroupRepository extends MongoRepository<RuleGroup, String> {
 
     RuleGroup findByGroupIdentifierCreatorAndGroupIdentifierGroupName(String creator,String groupName);
 }

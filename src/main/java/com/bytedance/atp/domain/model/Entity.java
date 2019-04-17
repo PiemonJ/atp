@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 public abstract class Entity {
 
     @Id
-    public long id;
+    public String id;
 
     @Override
 
@@ -27,27 +27,13 @@ public abstract class Entity {
 
             return false;
 
-        if (this.id == 0 || other.getId() == 0)
+        if (this.id.isEmpty() || other.getId().isEmpty())
 
             return false;
 
-        return this.id == other.getId(); //identifier equality
+        return other.getId().equals(id); //identifier equality
 
     }
 
-
-    @Override
-
-    public int hashCode() {
-
-        final int prime = 31;
-
-        int result = 1;
-
-        result = prime * result + (int) (id ^ (id >>> 32));
-
-        return result;
-
-    }
 
 }

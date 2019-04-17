@@ -15,7 +15,7 @@ public class RuleTrapedEvent extends RuleEvent {
     public RuleTrapedEvent() {
     }
 
-    public RuleTrapedEvent(long ruleGroupId, String flowId, Rule rule) {
+    public RuleTrapedEvent(String ruleGroupId, String flowId, Rule rule) {
         super(ruleGroupId, flowId);
         this.rule = rule;
     }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FlowMeddleEvent {
 
-    public long groupId;
+    public String groupId;
 
     public String flowId;
 
@@ -24,7 +24,7 @@ public class FlowMeddleEvent {
 
     public State to;
 
-    public static FlowMeddleEvent apply(long groupId,String flowId,Direction direction){
+    public static FlowMeddleEvent apply(String groupId,String flowId,Direction direction){
 
         return new FlowMeddleEvent(groupId,flowId,direction.from,direction.to);
 

@@ -12,7 +12,7 @@ public class FlowProcessReq {
 
     ExeStrategy exeStrategy;
 
-    long ruleGroupId;
+    String ruleGroupId;
 
     String flowId;
 

@@ -11,7 +11,7 @@ public class BuildConfigCenterReq {
 
     Env env;
 
-    long ruleGroupId;
+    String ruleGroupId;
 
     Map<ConfigScalar,String> configer;
 

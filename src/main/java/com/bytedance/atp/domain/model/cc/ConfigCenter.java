@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class ConfigCenter extends AggregateRoot {
 
-    long ruleGroupId;
+    String ruleGroupId;
 
 //    Env env;
 

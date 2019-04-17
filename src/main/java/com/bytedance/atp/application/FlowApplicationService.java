@@ -38,7 +38,7 @@ public class FlowApplicationService {
 
         ExeStrategy exeStrategy = req.getExeStrategy();
 
-        long ruleGroupId = req.getRuleGroupId();
+        String ruleGroupId = req.getRuleGroupId();
 
         String flowId = req.getFlowId();
 

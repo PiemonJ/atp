@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ConfigCenterFactory {
 
-    public static ConfigCenter buildConfigCenter(Env env, long ruleGroupId, Map<ConfigScalar,String> configers){
+    public static ConfigCenter buildConfigCenter(Env env, String ruleGroupId, Map<ConfigScalar,String> configers){
 
         ConfigCenter cc = new ConfigCenter();
 

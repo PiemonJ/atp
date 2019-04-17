@@ -15,7 +15,7 @@ public class RuleNonMatchedEvent extends RuleEvent{
     public RuleNonMatchedEvent() {
     }
 
-    public RuleNonMatchedEvent(long ruleGroupId, String flowId, Rule rule) {
+    public RuleNonMatchedEvent(String ruleGroupId, String flowId, Rule rule) {
         super(ruleGroupId, flowId);
         this.rule = rule;
     }

@@ -9,7 +9,7 @@ import lombok.*;
 public class RuleEvent {
 
     //规则簇ID
-    public long ruleGroupId;
+    public String ruleGroupId;
 
     public String flowId;
 
