@@ -1,4 +1,4 @@
-package com.bytedance.atp.domain.model.runtime;
+package com.bytedance.atp.common;
 
 /**
  * 执行策略

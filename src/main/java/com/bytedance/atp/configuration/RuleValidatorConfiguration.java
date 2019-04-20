@@ -1,7 +1,7 @@
 package com.bytedance.atp.configuration;
 
 import com.bytedance.atp.core.validator.RuleValidator;
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.common.Rule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

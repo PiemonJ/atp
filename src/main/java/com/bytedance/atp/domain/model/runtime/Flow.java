@@ -1,22 +1,16 @@
 package com.bytedance.atp.domain.model.runtime;
 
-import com.bytedance.atp.domain.model.AggregateRoot;
-import com.bytedance.atp.domain.model.cc.Env;
 import com.bytedance.atp.domain.model.common.*;
-import com.bytedance.atp.domain.model.group.Rule;
-import io.reactivex.Flowable;
+import com.bytedance.atp.common.Env;
+import com.bytedance.atp.common.ExeStrategy;
+import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.common.State;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.processors.PublishProcessor;
-import io.reactivex.subjects.Subject;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.core.ApplicationContext;
-import org.reactivestreams.Publisher;
 import org.springframework.context.ApplicationEventPublisher;
 
-import java.nio.channels.Channel;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -100,7 +94,7 @@ loop:       while (iterator.hasNext()){
 
                     if (!operator.action().ok()){
 
-                        bus.publishEvent(RuleEventFactory.withNonMatched(groupId,flowId,rule));
+                        bus.publishEvent(FlowEventFactory.withNonMatched(groupId,flowId,rule));
 
                         switch (exeStrategy){
                             case FAIL_FAST:
@@ -110,7 +104,7 @@ loop:       while (iterator.hasNext()){
                         }
                     } else {
 
-                        bus.publishEvent(RuleEventFactory.withMatched(groupId,flowId,rule));
+                        bus.publishEvent(FlowEventFactory.withMatched(groupId,flowId,rule));
 
                     }
                 } else if (state.get() == State.PAUSE){
@@ -119,7 +113,7 @@ loop:       while (iterator.hasNext()){
 
                 } else if (state.get() == State.INTERRUPT){
 
-                    bus.publishEvent(RuleEventFactory.withInterrupt(groupId,flowId));
+                    bus.publishEvent(FlowEventFactory.withInterrupt(groupId,flowId));
                     break;
 
                 } else if (state.get() == State.DONE){
@@ -139,13 +133,13 @@ loop:       while (iterator.hasNext()){
 
         } catch (Exception e){
 
-            bus.publishEvent(RuleEventFactory.withTraped(groupId,flowId,rule));
+            bus.publishEvent(FlowEventFactory.withTraped(groupId,flowId,rule));
 
             log.info(e.getMessage());
 
         } finally {
 
-            bus.publishEvent(RuleEventFactory.withTerminal(groupId,flowId));
+            bus.publishEvent(FlowEventFactory.withTerminal(groupId,flowId));
 
             disposable.dispose();
         }

@@ -2,8 +2,8 @@ package com.bytedance.atp.domain.model.runtime;
 
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigPile;
-import com.bytedance.atp.domain.model.common.Tuple2;
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.common.Tuple2;
+import com.bytedance.atp.common.Rule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

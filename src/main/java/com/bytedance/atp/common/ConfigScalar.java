@@ -1,9 +1,8 @@
-package com.bytedance.atp.domain.model.cc;
+package com.bytedance.atp.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * 配置的标量

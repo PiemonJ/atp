@@ -1,6 +1,7 @@
 package com.bytedance.atp.domain.model.common;
 
-import com.bytedance.atp.domain.model.runtime.State;
+import com.bytedance.atp.common.Direction;
+import com.bytedance.atp.common.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,9 @@ public class FlowMeddleEvent {
 
     public State to;
 
-    public static FlowMeddleEvent apply(String groupId,String flowId,Direction direction){
+    public static FlowMeddleEvent apply(String groupId, String flowId, Direction direction){
 
-        return new FlowMeddleEvent(groupId,flowId,direction.from,direction.to);
+        return new FlowMeddleEvent(groupId,flowId,direction.getFrom(),direction.getTo());
 
     }
 }

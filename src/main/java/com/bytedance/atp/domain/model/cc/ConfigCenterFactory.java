@@ -1,6 +1,8 @@
 package com.bytedance.atp.domain.model.cc;
 
-import java.util.List;
+import com.bytedance.atp.common.ConfigScalar;
+import com.bytedance.atp.common.Env;
+
 import java.util.Map;
 import java.util.UUID;
 

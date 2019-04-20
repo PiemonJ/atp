@@ -1,8 +1,8 @@
 package com.bytedance.atp.share.req;
 
-import com.bytedance.atp.domain.model.cc.Env;
-import com.bytedance.atp.domain.model.common.Direction;
-import com.bytedance.atp.domain.model.runtime.ExeStrategy;
+import com.bytedance.atp.common.Direction;
+import com.bytedance.atp.common.Env;
+import com.bytedance.atp.common.ExeStrategy;
 import lombok.Data;
 
 @Data

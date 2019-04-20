@@ -1,10 +1,11 @@
 package com.bytedance.atp.infrastructure.service;
 
+import com.bytedance.atp.common.DateInterval;
+import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.*;
-import com.bytedance.atp.domain.model.common.Tuple2;
-import com.bytedance.atp.domain.model.common.Weekday;
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.domain.model.common.Single;
+import com.bytedance.atp.common.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,50 +14,40 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static java.awt.SystemColor.info;
-
 @Component(value = "WINDOW_PERIOD_RELEASE_VALIDATOR")
 public class WINDOW_PERIOD_RELEASE_VALIDATOR implements RuleValidator {
 
+    public static final Rule REFERENCE_RULE = Rule.WINDOW_PERIOD_RELEASE;
+
     @Autowired
     public WINDOW_PERIOD_RELEASE_VALIDATOR(ConcurrentHashMap<Rule, RuleValidator> ruleHandlerRegister) {
-        ruleHandlerRegister.put(Rule.WINDOW_PERIOD_RELEASE,this);
+        ruleHandlerRegister.put(REFERENCE_RULE,this);
     }
 
     @Override
     public List<Tuple2<String, Boolean>> argsValidate(ConfigPile pile) {
 
-        Configer<List<Weekday>> configer = pile.obtain(ConfigDescriptor.RELEASE_VALID_DAY);
+        Configer<Single<DateInterval>> configer = pile.obtain(ConfigDescriptor.RELEASE_VALID_DAY);
 
-        List<Weekday> weekdays = configer.obtainValue().get();
+        Single<DateInterval> single = configer.obtainValue().get();
 
-        return Arrays.asList(Tuple2.apply(ConfigDescriptor.RELEASE_VALID_DAY.getScalar().getDesc(),weekdays == null ? false : true));
+
+        return Arrays.asList(Tuple2.apply(ConfigDescriptor.RELEASE_VALID_DAY.getScalar().getDesc(),single.getValue() == null ? false : true));
     }
 
     @Override
-    public Tuple2<Object, Boolean> ruleValidate(ConfigPile pile) {
+    public Tuple2<Rule, Boolean> ruleValidate(ConfigPile pile) {
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
 
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        Configer<Single<DateInterval>> configer = pile.obtain(ConfigDescriptor.RELEASE_VALID_DAY);
 
+        Single<DateInterval> singleDateInterval = configer.obtainValue().get();
 
-        Configer<List<Weekday>> configer = pile.obtain(ConfigDescriptor.RELEASE_VALID_DAY);
+        boolean within = singleDateInterval.value.within(now.getTime());
 
+        return Tuple2.apply(REFERENCE_RULE,within);
 
-        List<Weekday> weekdays = configer.obtainValue().get();
-
-        System.out.println(weekdays.size());
-        weekdays.stream()
-                .forEach(x -> {
-                    System.out.println(x.getCode() + ":" + x.getDesc());
-                });
-
-        boolean result = weekdays
-                .stream()
-                .anyMatch(weekday -> week == weekday.code);
-
-        return Tuple2.apply(null,result);
     }
 
 }

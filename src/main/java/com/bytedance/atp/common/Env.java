@@ -1,9 +1,9 @@
-package com.bytedance.atp;
+package com.bytedance.atp.common;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ConfigEnv {
+public enum Env {
 
     TEST(0,"测试"),
     UAT(1,"预发"),

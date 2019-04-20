@@ -1,8 +1,11 @@
 package com.bytedance.atp.infrastructure.event;
 
 import com.bytedance.atp.application.ReportingApplicationService;
+import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.common.State;
 import com.bytedance.atp.domain.model.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -10,45 +13,102 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlowRuntimeListener {
 
+
+    //Spring上下文
+    public ApplicationEventPublisher bus;
+
+
     @Autowired
     private ReportingApplicationService reportingApplicationService;
 
     @Async
     @EventListener
-    public void onnterrupted(RuleInterruptedEvent event) {
+    public void onStarted(FlowStartedEvent event) {
         //Invoke Report Rich Method
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
 
+        reportingApplicationService.initReport(ruleGroupId,flowId);
 
-    }
-
-    @Async
-    @EventListener
-    public void onTraped(RuleTrapedEvent event) {
-        //Invoke Report Rich Method
-
-    }
-
-    @Async
-    @EventListener
-    public void onFMatched(RuleMatchedEvent event) {
-        //Invoke Report Rich Method
 
     }
 
 
     @Async
     @EventListener
-    public void onNonMatched(RuleNonMatchedEvent event) {
+    public void onnterrupted(FlowInterruptedEvent event) {
         //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        String ruleGroupId = event.getRuleGroupId();
+
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.INTERRUPT, null,null);
+
+        if (!ok)
+            bus.publishEvent(event);
+
 
     }
 
     @Async
     @EventListener
-    public void onTerminal(RuleTerminalEvent event) {
+    public void onTraped(FlowTrapedEvent event) {
         //Invoke Report Rich Method
+        //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        String ruleGroupId = event.getRuleGroupId();
+
+        Rule rule = event.getRule();
+
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.TRAP, rule,null);
+
+        if (!ok)
+            bus.publishEvent(event);
+    }
+
+    @Async
+    @EventListener
+    public void onFMatched(FlowMatchedEvent event) {
+        //Invoke Report Rich Method
+        //Invoke Report Rich Method
+        //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        String ruleGroupId = event.getRuleGroupId();
+
+        Rule rule = event.getRule();
+
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, rule,true);
+
+        if (!ok)
+            bus.publishEvent(event);
+    }
+
+
+    @Async
+    @EventListener
+    public void onNonMatched(FlowNonMatchedEvent event) {
+        //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        String ruleGroupId = event.getRuleGroupId();
+
+        Rule rule = event.getRule();
+
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, rule,false);
+
+        if (!ok)
+            bus.publishEvent(event);
+    }
+
+    @Async
+    @EventListener
+    public void onTerminal(FlowTerminalEvent event) {
+        //Invoke Report Rich Method
+        String flowId = event.getFlowId();
+        String ruleGroupId = event.getRuleGroupId();
+
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.DONE, null,false);
+
+        if (!ok)
+            bus.publishEvent(event);
 
     }
 

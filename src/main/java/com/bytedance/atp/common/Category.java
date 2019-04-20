@@ -1,4 +1,4 @@
-package com.bytedance.atp.domain.model.common;
+package com.bytedance.atp.common;
 
 /**
  * 配置的分类

@@ -1,14 +1,14 @@
 package com.bytedance.atp.domain.model.cc;
 
-import com.alibaba.fastjson.TypeReference;
-import com.bytedance.atp.domain.model.common.Category;
+import com.bytedance.atp.common.DateInterval;
 import com.bytedance.atp.domain.model.common.Single;
 import com.bytedance.atp.domain.model.common.Weekday;
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.common.Category;
+import com.bytedance.atp.common.ConfigScalar;
+import com.bytedance.atp.common.Rule;
 import lombok.Builder;
 import lombok.Data;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -36,9 +36,9 @@ public class ConfigDescriptor<T> {
                     .build();
 
 
-    public static final ConfigDescriptor<List<Weekday>> RELEASE_VALID_DAY =
-            ConfigDescriptor.<List<Weekday>>builder()
-                    .type(ErasuredType.LIST_WEEKDAY)
+    public static final ConfigDescriptor<Single<DateInterval>> RELEASE_VALID_DAY =
+            ConfigDescriptor.<Single<DateInterval>>builder()
+                    .type(ErasuredType.SINGLE_DATEINTERVAL)
                     .scalar(ConfigScalar.RELEASE_VALID_DAY)
                     .categories(Arrays.asList(Category.RELEASE))
                     .referenceRules(Arrays.asList(Rule.WINDOW_PERIOD_RELEASE))

@@ -1,6 +1,6 @@
 package com.bytedance.atp.domain.model.cc;
 
-import com.bytedance.atp.domain.model.common.Category;
+import com.bytedance.atp.common.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -3,17 +3,16 @@ package com.bytedance.atp.application;
 import com.bytedance.atp.core.compiler.Compiler;
 import com.bytedance.atp.domain.model.cc.ConfigCenter;
 import com.bytedance.atp.domain.model.cc.ConfigCenterRepository;
-import com.bytedance.atp.domain.model.cc.Env;
-import com.bytedance.atp.domain.model.common.Direction;
 import com.bytedance.atp.domain.model.common.FlowMeddleEvent;
 import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.group.RuleGroupRepository;
-import com.bytedance.atp.domain.model.runtime.ExeStrategy;
 import com.bytedance.atp.domain.model.runtime.Flow;
+import com.bytedance.atp.common.Direction;
+import com.bytedance.atp.common.Env;
+import com.bytedance.atp.common.ExeStrategy;
 import com.bytedance.atp.share.req.FlowProcessReq;
 import io.reactivex.processors.PublishProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,7 +31,7 @@ public class FlowApplicationService {
     public PublishProcessor<FlowMeddleEvent> meddle;
 
 
-    public void flow(FlowProcessReq req) {
+    public String flow(FlowProcessReq req) {
 
         Env env = req.getEnv();
 
@@ -44,6 +43,8 @@ public class FlowApplicationService {
 
         Direction direction = req.getDirection();
 
+        String flowID = "";
+
         switch (direction){
 
             case TORUN:
@@ -54,6 +55,8 @@ public class FlowApplicationService {
 
                 Flow flow = compiler.compile(env, exeStrategy, ruleGroup, configCenter);
 
+                flowID = flow.getFlowId();
+
                 flow.run();
 
                 break;
@@ -63,6 +66,8 @@ public class FlowApplicationService {
                 meddle.onNext(FlowMeddleEvent.apply(ruleGroupId,flowId,direction));
 
         }
+
+        return flowID;
 
 
     }

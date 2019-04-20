@@ -1,10 +1,9 @@
 package com.bytedance.atp.domain.model.group;
 
 import com.bytedance.atp.domain.model.AggregateRoot;
+import com.bytedance.atp.common.Rule;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import sun.rmi.log.LogInputStream;
 
 import java.util.List;
 @Data

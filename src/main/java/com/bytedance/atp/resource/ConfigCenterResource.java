@@ -4,31 +4,27 @@ import com.bytedance.atp.application.ConfigCenterApplicationService;
 import com.bytedance.atp.share.req.BuildConfigCenterReq;
 import com.bytedance.atp.share.req.RebuildConfigCenterReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-@RestController
+
+@FeignClient(url = "")
 @RequestMapping("/config/center")
-public class ConfigCenterResource {
+public interface ConfigCenterResource {
 
-    @Autowired
-    private ConfigCenterApplicationService configCenterApplicationService;
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/build",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public String buildConfigCenter(BuildConfigCenterReq req);
 
-
-    @PostMapping("/build")
-    public String buildConfigCenter(BuildConfigCenterReq req){
-
-        configCenterApplicationService.buildConfigCenter(req);
-
-        return "true";
-
-    }
-
-    @PostMapping("/rebuild")
-    public String rebuildConfigCenter(RebuildConfigCenterReq req){
-
-        configCenterApplicationService.rebuildConfigCenter(req);
-
-        return "true";
-    }
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/rebuild",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public String rebuildConfigCenter(RebuildConfigCenterReq req);
 }

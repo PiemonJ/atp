@@ -1,6 +1,6 @@
 package com.bytedance.atp.application;
 
-import com.bytedance.atp.domain.model.common.Tuple2;
+import com.bytedance.atp.common.Tuple2;
 import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.group.RuleGroupFactory;
 import com.bytedance.atp.domain.model.group.RuleGroupRepository;
@@ -42,6 +42,8 @@ public class RuleGroupApplicationService {
 
         if (group != null){
             //满足幂等
+
+
 
             group.rebuild(groupName,req.getRules());
 

@@ -1,6 +1,6 @@
 package com.bytedance.atp.share.req;
 
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.common.Rule;
 import lombok.Data;
 
 import java.util.List;

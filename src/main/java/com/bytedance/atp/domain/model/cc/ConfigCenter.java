@@ -1,9 +1,11 @@
 package com.bytedance.atp.domain.model.cc;
 
 import com.bytedance.atp.domain.model.AggregateRoot;
-import com.bytedance.atp.domain.model.common.Category;
-import com.bytedance.atp.domain.model.common.Tuple2;
-import com.bytedance.atp.domain.model.group.Rule;
+import com.bytedance.atp.common.Tuple2;
+import com.bytedance.atp.common.Category;
+import com.bytedance.atp.common.ConfigScalar;
+import com.bytedance.atp.common.Env;
+import com.bytedance.atp.common.Rule;
 import io.reactivex.Flowable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 配置中心
@@ -108,7 +109,7 @@ public class ConfigCenter extends AggregateRoot {
             Optional<ConfigBlock> block = table.get()
                     .getBlocks()
                     .stream()
-                    .filter(configBlock -> configBlock.category == rule.category)
+                    .filter(configBlock -> configBlock.category == rule.getCategory())
                     .findAny();
 
             if (block.isPresent()){

@@ -3,33 +3,31 @@ package com.bytedance.atp.resource;
 import com.bytedance.atp.application.RuleGroupApplicationService;
 import com.bytedance.atp.share.req.BuildRuleGroupReq;
 import com.bytedance.atp.share.req.RebuildRuleGroupReq;
+import com.bytedance.atp.share.resp.BuildRuleGroupResp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@FeignClient(url = "")
 @RequestMapping("/rule/group")
-public class RuleGroupResource {
-    @Autowired
-    private RuleGroupApplicationService ruleGroupApplicationService;
+public interface RuleGroupResource {
 
-    @PostMapping("/build")
-    public String  buildRuleGroup(BuildRuleGroupReq req){
 
-        ruleGroupApplicationService.buildRuleGroup(req);
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/build",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public BuildRuleGroupResp buildRuleGroup(BuildRuleGroupReq req);
 
-        return "true";
-
-    }
-
-    @PostMapping("/rebuild")
-    public String rebuildRuleGroup(RebuildRuleGroupReq req){
-
-        ruleGroupApplicationService.rebuildRuleGroup(req);
-
-        return "true";
-
-    }
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/rebuild",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public Boolean rebuildRuleGroup(RebuildRuleGroupReq req);
 
 }

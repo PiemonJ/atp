@@ -1,7 +1,7 @@
 package com.bytedance.atp.share.req;
 
-import com.bytedance.atp.domain.model.cc.ConfigScalar;
-import com.bytedance.atp.domain.model.cc.Env;
+import com.bytedance.atp.common.ConfigScalar;
+import com.bytedance.atp.common.Env;
 import lombok.Data;
 
 import java.util.Map;
