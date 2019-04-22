@@ -33,7 +33,7 @@ public class RuleGroupListener {
         List<Rule> rules = event.getRules();
         String ruleGroupId = event.getRuleGroupId();
 
-        configCenterApplicationService.configCenterIniter(ruleGroupId,rules);
+        configCenterApplicationService.configCenterIniter(gitlab,ruleGroupId,rules);
 
     }
 
@@ -46,7 +46,7 @@ public class RuleGroupListener {
         List<Rule> rules = event.getRules();
         String ruleGroupId = event.getRuleGroupId();
 
-        configCenterApplicationService.configCenterChanger(ruleGroupId,rules);
+        configCenterApplicationService.configCenterChanger(gitlab,ruleGroupId,rules);
 
     }
 }

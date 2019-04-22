@@ -28,13 +28,13 @@ public class ConfigCenterApplicationService {
      * @param ruleGroupId
      * @param rules
      */
-    public void configCenterIniter(String ruleGroupId,List<Rule> rules){
+    public void configCenterIniter(String gitlab,String ruleGroupId,List<Rule> rules){
 
         ConfigCenter cc = configCenterRepository.findByRuleGroupId(ruleGroupId);
 
         if (cc == null){
 
-            ConfigCenter configCenter = ConfigCenterFactory.configCenterIniter(ruleGroupId, rules);
+            ConfigCenter configCenter = ConfigCenterFactory.configCenterIniter(gitlab,ruleGroupId, rules);
 
             configCenterRepository.save(configCenter);
         }
@@ -47,13 +47,13 @@ public class ConfigCenterApplicationService {
      * @param ruleGroupId
      * @param rules
      */
-    public void configCenterChanger(String ruleGroupId,List<Rule> rules){
+    public void configCenterChanger(String gitlab,String ruleGroupId,List<Rule> rules){
 
         ConfigCenter cc = configCenterRepository.findByRuleGroupId(ruleGroupId);
 
         if (cc != null){
 
-            ConfigCenter configCenter = ConfigCenterFactory.configCenterChanger(cc, rules);
+            ConfigCenter configCenter = ConfigCenterFactory.configCenterChanger(gitlab,cc, rules);
 
             configCenterRepository.save(configCenter);
         }

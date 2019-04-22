@@ -21,8 +21,6 @@ public class ConfigPile {
 
     public String ruleGroupId;
 
-    public Env env;
-
     public Rule rule;
 
     public Map<ConfigDescriptor,Configer> configers;

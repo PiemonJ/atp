@@ -47,10 +47,9 @@ public class Flow {
 
     public Disposable disposable;
 
-    public Flow(String groupId, Env env, Category category,ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
+    public Flow(String groupId, Category category,ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
         this.flowId = UUID.randomUUID().toString();
         this.groupId = groupId;
-        this.env = env;
         this.category = category;
         this.exeStrategy = exeStrategy;
         this.state = new AtomicReference<>(State.READY);

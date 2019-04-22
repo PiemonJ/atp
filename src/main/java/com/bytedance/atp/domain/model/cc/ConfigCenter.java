@@ -32,7 +32,7 @@ public class ConfigCenter extends AggregateRoot {
 
     String ruleGroupId;
 
-//    Env env;
+    String gitlab;
 
     ConfigTable configTable;
 
@@ -88,7 +88,7 @@ public class ConfigCenter extends AggregateRoot {
 
 
 
-    public ConfigPile obtainConfigPile(Rule rule, Env env){
+    public ConfigPile obtainConfigPile(Rule rule){
 
 
         ConcurrentMap<ConfigDescriptor, Configer> configers = new ConcurrentHashMap<ConfigDescriptor,Configer>();
@@ -118,7 +118,6 @@ public class ConfigCenter extends AggregateRoot {
         }
 
         return ConfigPile.builder()
-                .env(env)
                 .rule(rule)
                 .ruleGroupId(ruleGroupId)
                 .configers(configers)

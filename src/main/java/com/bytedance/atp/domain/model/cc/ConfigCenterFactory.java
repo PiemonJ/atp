@@ -28,7 +28,7 @@ public class ConfigCenterFactory {
     }
 
 
-    public static ConfigCenter configCenterIniter(String ruleGroupId, List<Rule> rules){
+    public static ConfigCenter configCenterIniter(String gitlab,String ruleGroupId, List<Rule> rules){
 
         Set<ConfigDescriptor> validDescriptors = rules.parallelStream()
                 .flatMap(rule -> ConfigDescriptor.descriptors.stream()
@@ -48,6 +48,8 @@ public class ConfigCenterFactory {
 
         cc.setVersion(0);
 
+        cc.setGitlab(gitlab);
+
         cc.setRuleGroupId(ruleGroupId);
 
         cc.configApply(configers);
@@ -58,7 +60,7 @@ public class ConfigCenterFactory {
     }
 
 
-    public static ConfigCenter configCenterChanger(ConfigCenter cc, List<Rule> rules){
+    public static ConfigCenter configCenterChanger(String gitlab,ConfigCenter cc, List<Rule> rules){
 
         List<Configer> allConfigers = cc.obtainAllConfiger();
 
@@ -74,6 +76,8 @@ public class ConfigCenterFactory {
 
 
         cc.configApply(mixin(allConfigers,activeConfigers));
+
+        cc.setGitlab(gitlab);
 
         return cc;
 

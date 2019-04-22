@@ -22,14 +22,15 @@ public class ConfigDescriptor<T> {
 
 
 
-    public static final ConfigDescriptor<Single<String>> PROJECT_LOCATION =
-            ConfigDescriptor.<Single<String>>builder()
-                    .type(ErasuredType.SINGLE_STRING)
-                    .scalar(ConfigScalar.PROJECT_LOCATION)
-                    .categories(Arrays.asList(Category.values()))
-                    .referenceRules(Arrays.asList(Rule.values()))
-                    .defaultValue("")
-                    .build();
+
+//    public static final ConfigDescriptor<Single<String>> PROJECT_LOCATION =
+//            ConfigDescriptor.<Single<String>>builder()
+//                    .type(ErasuredType.SINGLE_STRING)
+//                    .scalar(ConfigScalar.PROJECT_LOCATION)
+//                    .categories(Arrays.asList(Category.values()))
+//                    .referenceRules(Arrays.asList(Rule.values()))
+//                    .defaultValue("")
+//                    .build();
 
 
     public static final ConfigDescriptor<Single<DateInterval>> RELEASE_VALID_DAY =
@@ -51,19 +52,29 @@ public class ConfigDescriptor<T> {
                     .build();
 
 
+    public static final ConfigDescriptor<Single<BigDecimal>> CODE_OK_RATE =
+            ConfigDescriptor.<Single<BigDecimal>>builder()
+                    .type(ErasuredType.SINGLE_BIGDECIMAL)
+                    .scalar(ConfigScalar.CODE_OK_RATE)
+                    .categories(Arrays.asList(Category.CODE))
+                    .referenceRules(Arrays.asList(Rule.OK_RATE))
+                    .defaultValue(JSON.toJSONString(Single.of(BigDecimal.valueOf(0.8D))))
+                    .build();
+
+
     public static ConcurrentHashMap<ConfigScalar,ConfigDescriptor> dic = new ConcurrentHashMap<ConfigScalar,ConfigDescriptor>() {
         {
-            this.put(ConfigScalar.PROJECT_LOCATION, PROJECT_LOCATION);
             this.put(ConfigScalar.RELEASE_VALID_DAY, RELEASE_VALID_DAY);
             this.put(ConfigScalar.CODE_COVERAGE,CODE_COVERAGE);
+            this.put(ConfigScalar.CODE_OK_RATE,CODE_OK_RATE);
         }
     };
 
 
     public static final List<ConfigDescriptor<?>> descriptors = Arrays.asList(
-            PROJECT_LOCATION,
             RELEASE_VALID_DAY,
-            CODE_COVERAGE);
+            CODE_COVERAGE,
+            CODE_OK_RATE);
 
     ErasuredType type;
 

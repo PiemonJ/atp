@@ -34,8 +34,6 @@ public class FlowApplicationService {
 
     public String flow(FlowProcessReq req) {
 
-        Env env = req.getEnv();
-
         String gitlab = req.getGitlab();
 
         Category category = req.getCategory();
@@ -54,7 +52,7 @@ public class FlowApplicationService {
 
                 ConfigCenter configCenter = configCenterRepository.findByRuleGroupId(ruleGroup.getId());
 
-                Flow flow = compiler.compile(env, category, exeStrategy, ruleGroup, configCenter);
+                Flow flow = compiler.compile(category, exeStrategy, ruleGroup, configCenter);
 
                 flowID = flow.getFlowId();
 

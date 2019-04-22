@@ -44,13 +44,13 @@ public class Compiler {
     /**
      * 编译器核心方法，将静态资源编译为Runtime的Flow
      */
-    public Flow compile(Env env, Category category, ExeStrategy strategy, RuleGroup group, ConfigCenter center){
+    public Flow compile(Category category, ExeStrategy strategy, RuleGroup group, ConfigCenter center){
 
         RuleGroupPile pile = group.ruleGroupOfSpecCategory(category);
 
         OperatorChain chain = Flowable.fromIterable(pile.rules)
                 .map(rule -> Tuple2.<Rule, RuleValidator>apply(rule, ruleHandlerRegister.get(rule)))
-                .map(ruleAndValidator -> Tuple3.apply(ruleAndValidator, center.obtainConfigPile(ruleAndValidator._1, env)))
+                .map(ruleAndValidator -> Tuple3.apply(ruleAndValidator, center.obtainConfigPile(ruleAndValidator._1)))
                 .map(ruleAndValidatorAndPile -> new Operator(ruleAndValidatorAndPile._1, ruleAndValidatorAndPile._2, ruleAndValidatorAndPile._3))
                 .reduce(
                         OperatorChain.newInstance(),
@@ -65,7 +65,6 @@ public class Compiler {
 
         return new Flow(
                 group.id,
-                env,
                 category,
                 strategy,
                 chain,
