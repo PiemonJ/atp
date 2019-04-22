@@ -4,7 +4,7 @@ import com.bytedance.atp.common.DateInterval;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.*;
-import com.bytedance.atp.domain.model.common.Single;
+import com.bytedance.atp.common.Single;
 import com.bytedance.atp.common.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -13,14 +13,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 配置中心
@@ -36,7 +34,7 @@ public class ConfigCenter extends AggregateRoot {
 
 //    Env env;
 
-    List<ConfigTable> configTables = new ArrayList<>();
+    ConfigTable configTable;
 
 
     public static Function<Map<ConfigScalar,String>,List<Configer>> mapping = map -> map.entrySet().stream()
@@ -44,17 +42,15 @@ public class ConfigCenter extends AggregateRoot {
                 .collect(Collectors.toList());
 
 
-
-
-    public void configApply(Env env, Map<ConfigScalar,String> configers){
+    public void configApply(Map<ConfigScalar,String> configers){
 
         List<Configer> cs = ConfigCenter.mapping.apply(configers);
 
-        configApply(env,cs);
+        configApply(cs);
     }
 
 
-    public void configApply(Env env, List<Configer> configers){
+    public void configApply(List<Configer> configers){
 
         ConfigTable configTable = Flowable.fromArray(Category.values())
                 .map(
@@ -76,7 +72,6 @@ public class ConfigCenter extends AggregateRoot {
                         }
                 ).reduce(
                         ConfigTable.builder()
-                                .env(env)
                                 .blocks(new ArrayList<ConfigBlock>())
                                 .build(),
                         (table, block) -> {
@@ -86,11 +81,8 @@ public class ConfigCenter extends AggregateRoot {
                 ).blockingGet();
 
 
-        List<ConfigTable> tables = configTables.stream()
-                .filter(ct -> configTable.env != env)
-                .collect(Collectors.toList());
-        tables.add(configTable);
-        this.configTables = tables;
+
+        this.configTable = configTable;
 
     }
 
@@ -101,12 +93,9 @@ public class ConfigCenter extends AggregateRoot {
 
         ConcurrentMap<ConfigDescriptor, Configer> configers = new ConcurrentHashMap<ConfigDescriptor,Configer>();
 
-        Optional<ConfigTable> table = this.getConfigTables()
-                .stream()
-                .filter(configTable -> configTable.env == env)
-                .findAny();
-        if (table.isPresent()){
-            Optional<ConfigBlock> block = table.get()
+        ConfigTable configTable = getConfigTable();
+        if (configTable != null){
+            Optional<ConfigBlock> block = configTable
                     .getBlocks()
                     .stream()
                     .filter(configBlock -> configBlock.category == rule.getCategory())
@@ -137,4 +126,19 @@ public class ConfigCenter extends AggregateRoot {
 
     }
 
+
+    public List<Configer> obtainAllConfiger(){
+
+        return configTable.getBlocks().parallelStream()
+                .flatMap(block -> block.getConfigers().stream())
+                .collect(Collectors.toList());
+    }
+
+    public List<Configer> obtainAllActiveConfiger(){
+
+        return configTable.getBlocks().parallelStream()
+                .flatMap(block -> block.getConfigers().stream())
+                .filter(configer -> configer.isActive())
+                .collect(Collectors.toList());
+    }
 }

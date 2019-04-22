@@ -3,7 +3,7 @@ package com.bytedance.atp.infrastructure.event;
 import com.bytedance.atp.application.ReportingApplicationService;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.State;
-import com.bytedance.atp.domain.model.common.*;
+import com.bytedance.atp.domain.model.runtime.event.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;

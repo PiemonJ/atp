@@ -2,32 +2,24 @@ package com.bytedance.atp.domain.model.group;
 
 import com.bytedance.atp.domain.model.ValueObject;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class GroupIdentifier extends ValueObject<GroupIdentifier> {
 
-    public String groupName;
-
-    public String creator;
-
-
-    public GroupIdentifier copyCreator(String groupName){
-        if (groupName.equals(groupName)){
-            return this;
-        }
-        return new GroupIdentifier(groupName,creator);
-    }
+    public String gitlab;
 
 
     @Override
     protected boolean equalsCore(GroupIdentifier other) {
-        return this.creator.equals(other.creator) && this.groupName.equals(other.groupName)
-            ? true
-            : false;
+        return this.gitlab.equals(other.gitlab) ? true : false;
     }
 
     @Override
     protected int getHashCodeCore() {
-        return 0;
+        return 15681 * 13 + gitlab.hashCode();
     }
 }

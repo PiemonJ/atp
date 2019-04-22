@@ -1,8 +1,8 @@
 package com.bytedance.atp.domain.model.cc;
 
+import com.alibaba.fastjson.JSON;
 import com.bytedance.atp.common.DateInterval;
-import com.bytedance.atp.domain.model.common.Single;
-import com.bytedance.atp.domain.model.common.Weekday;
+import com.bytedance.atp.common.Single;
 import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.ConfigScalar;
 import com.bytedance.atp.common.Rule;
@@ -18,13 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Builder
 public class ConfigDescriptor<T> {
 
-    public static ConcurrentHashMap<ConfigScalar,ConfigDescriptor> dic = new ConcurrentHashMap<ConfigScalar,ConfigDescriptor>() {
-        {
-            this.put(ConfigScalar.PROJECT_LOCATION, PROJECT_LOCATION);
-            this.put(ConfigScalar.RELEASE_VALID_DAY, RELEASE_VALID_DAY);
-            this.put(ConfigScalar.CODE_COVERAGE,CODE_COVERAGE);
-        }
-    };
+
+
 
 
     public static final ConfigDescriptor<Single<String>> PROJECT_LOCATION =
@@ -33,6 +28,7 @@ public class ConfigDescriptor<T> {
                     .scalar(ConfigScalar.PROJECT_LOCATION)
                     .categories(Arrays.asList(Category.values()))
                     .referenceRules(Arrays.asList(Rule.values()))
+                    .defaultValue("")
                     .build();
 
 
@@ -51,8 +47,23 @@ public class ConfigDescriptor<T> {
                     .scalar(ConfigScalar.CODE_COVERAGE)
                     .categories(Arrays.asList(Category.CODE))
                     .referenceRules(Arrays.asList(Rule.COVERAGE))
+                    .defaultValue(JSON.toJSONString(Single.of(BigDecimal.valueOf(0.8D))))
                     .build();
 
+
+    public static ConcurrentHashMap<ConfigScalar,ConfigDescriptor> dic = new ConcurrentHashMap<ConfigScalar,ConfigDescriptor>() {
+        {
+            this.put(ConfigScalar.PROJECT_LOCATION, PROJECT_LOCATION);
+            this.put(ConfigScalar.RELEASE_VALID_DAY, RELEASE_VALID_DAY);
+            this.put(ConfigScalar.CODE_COVERAGE,CODE_COVERAGE);
+        }
+    };
+
+
+    public static final List<ConfigDescriptor<?>> descriptors = Arrays.asList(
+            PROJECT_LOCATION,
+            RELEASE_VALID_DAY,
+            CODE_COVERAGE);
 
     ErasuredType type;
 
@@ -61,6 +72,8 @@ public class ConfigDescriptor<T> {
     List<Category> categories;
 
     List<Rule> referenceRules;
+
+    String defaultValue;
 
 
     public static ConfigDescriptor apply(ConfigScalar scalar){

@@ -37,7 +37,8 @@ public class ConfigPile {
      */
 
     public <T> Configer<T> obtain(ConfigDescriptor<T> descriptor){
-        return new Configer<>(
+        return new Configer<T>(
+                configers.get(descriptor).isActive(),
                 descriptor,
                 configers.get(descriptor).getValue()
         );

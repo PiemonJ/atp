@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,9 +25,9 @@ public class Template {
     @AllArgsConstructor
     public static class Builder{
 
-        private List<PARAM> ruleParams;
+        private List<PARAM> ruleParams = new ArrayList<>();
 
-        private List<Rule> rules;
+        private List<Rule> rules = new ArrayList<>();
 
         public Template build(){
 

@@ -1,4 +1,4 @@
-package com.bytedance.atp.domain.model.common;
+package com.bytedance.atp.domain.model.runtime.event;
 
 import com.bytedance.atp.common.Direction;
 import com.bytedance.atp.common.State;

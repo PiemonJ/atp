@@ -1,18 +1,22 @@
-package com.bytedance.atp.domain.model.cc;
+package com.bytedance.atp.share.req;
 
 import com.bytedance.atp.common.Env;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConfigTable {
+public class CatConfigCenterReq {
 
-    List<ConfigBlock> blocks;
+    public Env env;
+
+    public String gitlab;
+
+    public String ruleGroupId;
+
+
+
+
 }

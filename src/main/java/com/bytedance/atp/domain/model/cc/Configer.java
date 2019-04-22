@@ -16,18 +16,20 @@ import java.util.Optional;
 @AllArgsConstructor
 public class Configer<T> {
 
+    private boolean active;
+
     private ConfigDescriptor<T> descriptor;
 
     private ConfigValue value;
 
-    public static <T> Configer<T> apply(ConfigDescriptor<T> descriptor,ConfigValue value){
-        return new Configer<T>(descriptor,value);
+    public static <T> Configer<T> apply(ConfigDescriptor<T> descriptor,ConfigValue value,boolean active){
+        return new Configer<T>(active,descriptor,value);
     }
 
     public static Configer apply(ConfigScalar scalar, String json){
         ConfigDescriptor descriptor = ConfigDescriptor.apply(scalar);
         ConfigValue value = ConfigValue.apply(json);
-        return Configer.apply(descriptor,value);
+        return Configer.apply(descriptor,value,true);
     }
 
 
@@ -38,6 +40,11 @@ public class Configer<T> {
         else
             return Optional.ofNullable(JSON.<T>parseObject(value.json, descriptor.type.type));
 
+    }
+
+    public Configer deactive(){
+        this.active = false;
+        return this;
     }
 
 

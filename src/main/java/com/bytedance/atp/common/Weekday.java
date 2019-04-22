@@ -1,4 +1,4 @@
-package com.bytedance.atp.domain.model.common;
+package com.bytedance.atp.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

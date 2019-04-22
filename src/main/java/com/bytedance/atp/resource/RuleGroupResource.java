@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@FeignClient(url = "")
+//@FeignClient(name = "ruleGroupController",url = "http://localhost:8080/")
 @RequestMapping("/rule/group")
 public interface RuleGroupResource {
 
@@ -23,11 +23,11 @@ public interface RuleGroupResource {
     )
     public BuildRuleGroupResp buildRuleGroup(BuildRuleGroupReq req);
 
-    @RequestMapping(method = RequestMethod.POST,
-            value = "/rebuild",
-            consumes = "application/json",
-            produces = "application/json"
-    )
-    public Boolean rebuildRuleGroup(RebuildRuleGroupReq req);
+//    @RequestMapping(method = RequestMethod.POST,
+//            value = "/rebuild",
+//            consumes = "application/json",
+//            produces = "application/json"
+//    )
+//    public Boolean rebuildRuleGroup(RebuildRuleGroupReq req);
 
 }

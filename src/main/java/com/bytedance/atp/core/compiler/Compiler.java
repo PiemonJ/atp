@@ -1,16 +1,13 @@
 package com.bytedance.atp.core.compiler;
 
+import com.bytedance.atp.common.*;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigCenter;
-import com.bytedance.atp.domain.model.common.FlowMeddleEvent;
-import com.bytedance.atp.common.Tuple2;
-import com.bytedance.atp.common.Tuple3;
+import com.bytedance.atp.domain.model.group.GroupIdentifier;
+import com.bytedance.atp.domain.model.group.RuleGroupPile;
+import com.bytedance.atp.domain.model.runtime.event.FlowMeddleEvent;
 import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.runtime.*;
-import com.bytedance.atp.common.Env;
-import com.bytedance.atp.common.ExeStrategy;
-import com.bytedance.atp.common.Rule;
-import com.bytedance.atp.common.State;
 import io.reactivex.Flowable;
 import io.reactivex.processors.PublishProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +44,11 @@ public class Compiler {
     /**
      * 编译器核心方法，将静态资源编译为Runtime的Flow
      */
-    public Flow compile(Env env, ExeStrategy strategy, RuleGroup group, ConfigCenter center){
+    public Flow compile(Env env, Category category, ExeStrategy strategy, RuleGroup group, ConfigCenter center){
 
-        OperatorChain chain = Flowable.fromIterable(group.rules)
+        RuleGroupPile pile = group.ruleGroupOfSpecCategory(category);
+
+        OperatorChain chain = Flowable.fromIterable(pile.rules)
                 .map(rule -> Tuple2.<Rule, RuleValidator>apply(rule, ruleHandlerRegister.get(rule)))
                 .map(ruleAndValidator -> Tuple3.apply(ruleAndValidator, center.obtainConfigPile(ruleAndValidator._1, env)))
                 .map(ruleAndValidatorAndPile -> new Operator(ruleAndValidatorAndPile._1, ruleAndValidatorAndPile._2, ruleAndValidatorAndPile._3))
@@ -67,7 +66,7 @@ public class Compiler {
         return new Flow(
                 group.id,
                 env,
-                State.READY,
+                category,
                 strategy,
                 chain,
                 meddle,

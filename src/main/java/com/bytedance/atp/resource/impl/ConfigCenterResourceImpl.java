@@ -1,8 +1,10 @@
 package com.bytedance.atp.resource.impl;
 
 import com.bytedance.atp.application.ConfigCenterApplicationService;
+import com.bytedance.atp.domain.model.cc.ConfigCenter;
 import com.bytedance.atp.resource.ConfigCenterResource;
 import com.bytedance.atp.share.req.BuildConfigCenterReq;
+import com.bytedance.atp.share.req.CatConfigCenterReq;
 import com.bytedance.atp.share.req.RebuildConfigCenterReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,20 +18,21 @@ public class ConfigCenterResourceImpl implements ConfigCenterResource {
     private ConfigCenterApplicationService configCenterApplicationService;
 
 
+    @Override
+    public String configCenterDefine(BuildConfigCenterReq req){
 
-    public String buildConfigCenter(BuildConfigCenterReq req){
-
-        configCenterApplicationService.buildConfigCenter(req);
+        configCenterApplicationService.configCenterDefiner(req.getRuleGroupId(),req.getConfiger());
 
         return "true";
 
     }
 
 
-    public String rebuildConfigCenter(RebuildConfigCenterReq req){
+    @Override
+    public ConfigCenter catConfigCenter(CatConfigCenterReq req) {
 
-        configCenterApplicationService.rebuildConfigCenter(req);
 
-        return "true";
+        return configCenterApplicationService.configCenterCater(req);
+
     }
 }

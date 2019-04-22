@@ -31,7 +31,7 @@ public class AtpApplicationTests {
 //		ruleGroup.setVersion(0);
 //		ruleGroupRepository.save(ruleGroup);
 
-		RuleGroup rg = ruleGroupRepository.findByGroupIdentifierCreatorAndGroupIdentifierGroupName("Tester", "TestGroup");
+		RuleGroup rg = ruleGroupRepository.findByGroupIdentifierGitlab("Tester");
 
 		System.out.println(rg);
 

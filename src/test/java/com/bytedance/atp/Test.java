@@ -6,10 +6,8 @@ import com.bytedance.atp.common.ConfigScalar;
 import com.bytedance.atp.common.Env;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.Template;
-import com.bytedance.atp.domain.model.cc.ConfigCenter;
-import com.bytedance.atp.domain.model.common.Weekday;
+import com.bytedance.atp.common.Weekday;
 import com.bytedance.atp.resource.ConfigCenterResource;
-import com.bytedance.atp.resource.FlowResource;
 import com.bytedance.atp.resource.RuleGroupResource;
 import com.bytedance.atp.share.req.BuildConfigCenterReq;
 import com.bytedance.atp.share.req.BuildRuleGroupReq;
@@ -46,11 +44,11 @@ public class Test {
 
         Map<ConfigScalar, String> configers = template.getConfigers();
 
-        BuildRuleGroupResp buildRuleGroupResp = ruleGroupResource.buildRuleGroup(new BuildRuleGroupReq("creator", "name", rules));
+        BuildRuleGroupResp buildRuleGroupResp = ruleGroupResource.buildRuleGroup(new BuildRuleGroupReq("creator", "name", ".git",rules));
 
         String ruleGroupId = buildRuleGroupResp.getRuleGroupId();
 
-        String ok = configCenterResource.buildConfigCenter(new BuildConfigCenterReq(Env.TEST, ruleGroupId, configers));
+        String ok = configCenterResource.configCenterDefine(new BuildConfigCenterReq(Env.TEST, ruleGroupId, configers));
 
 
 

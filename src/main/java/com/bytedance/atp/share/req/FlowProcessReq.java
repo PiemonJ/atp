@@ -1,5 +1,6 @@
 package com.bytedance.atp.share.req;
 
+import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Direction;
 import com.bytedance.atp.common.Env;
 import com.bytedance.atp.common.ExeStrategy;
@@ -10,12 +11,14 @@ public class FlowProcessReq {
 
     Env env;
 
-    ExeStrategy exeStrategy;
+    String gitlab;
 
-    String ruleGroupId;
-
-    String flowId;
+    Category category;
 
     Direction direction;
+
+    ExeStrategy exeStrategy;
+
+
 
 }

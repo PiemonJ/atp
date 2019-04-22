@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(url = "")
+//@FeignClient(name = "reportingController",url = "http://localhost:8080/")
 @RequestMapping(value = "/report")
 public interface ReportingResource {
 
-    @RequestMapping(method = RequestMethod.GET,
-            value = "/cat",
-            consumes = "application/json",
-            produces = "application/json"
-    )
-    public List<Reporting> catReportOfRuleGroup(CatReportReq req);
+//    @RequestMapping(method = RequestMethod.GET,
+//            value = "/cat",
+//            consumes = "application/json",
+//            produces = "application/json"
+//    )
+//    public List<Reporting> catReportOfRuleGroup(CatReportReq req);
 
 
-    @RequestMapping(method = RequestMethod.GET,
-            value = "/cat",
-            consumes = "application/json",
-            produces = "application/json"
-    )
-    public Reporting catReportOfFlow(CatReportReq req);
+//    @RequestMapping(method = RequestMethod.GET,
+//            value = "/cat",
+//            consumes = "application/json",
+//            produces = "application/json"
+//    )
+//    public Reporting catReportOfFlow(CatReportReq req);
 }

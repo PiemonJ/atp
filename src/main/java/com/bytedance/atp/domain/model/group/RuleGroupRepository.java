@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RuleGroupRepository extends MongoRepository<RuleGroup, String> {
 
-    RuleGroup findByGroupIdentifierCreatorAndGroupIdentifierGroupName(String creator,String groupName);
+    RuleGroup findByGroupIdentifierGitlab(String gitlab);
 }

@@ -2,10 +2,9 @@ package com.bytedance.atp.domain.model.cc;
 
 import com.alibaba.fastjson.TypeReference;
 import com.bytedance.atp.common.DateInterval;
-import com.bytedance.atp.domain.model.common.Single;
-import com.bytedance.atp.domain.model.common.Weekday;
+import com.bytedance.atp.common.Single;
+import com.bytedance.atp.common.Weekday;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.lang.reflect.Type;

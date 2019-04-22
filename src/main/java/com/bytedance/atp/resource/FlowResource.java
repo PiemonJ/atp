@@ -9,10 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@FeignClient(url = "")
+//@FeignClient(name = "flowController",url = "http://localhost:8080/")
 @RequestMapping(value = "/flow")
 public interface FlowResource {
 
+
+    /**
+     * sat 发起HTTTP，触发Flow的执行
+     *
+     * @param req
+     * @return
+     */
 
     @RequestMapping(method = RequestMethod.POST,
             value = "/process",

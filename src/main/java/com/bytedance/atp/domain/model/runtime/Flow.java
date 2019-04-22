@@ -1,15 +1,14 @@
 package com.bytedance.atp.domain.model.runtime;
 
-import com.bytedance.atp.domain.model.common.*;
-import com.bytedance.atp.common.Env;
-import com.bytedance.atp.common.ExeStrategy;
-import com.bytedance.atp.common.Rule;
-import com.bytedance.atp.common.State;
+import com.bytedance.atp.common.*;
+import com.bytedance.atp.domain.model.runtime.event.FlowEventFactory;
+import com.bytedance.atp.domain.model.runtime.event.FlowMeddleEvent;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.processors.PublishProcessor;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.annotation.Transient;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,6 +29,8 @@ public class Flow {
 
     public Env env;
 
+    public Category category;
+
     //任务流执行策略
     public ExeStrategy exeStrategy;
 
@@ -38,18 +39,21 @@ public class Flow {
     public OperatorChain chain;
 
     //流程控制
+    @Transient
     public PublishProcessor<FlowMeddleEvent> meddle;
     //Spring上下文
+    @Transient
     public ApplicationEventPublisher bus;
 
     public Disposable disposable;
 
-    public Flow(String groupId, Env env, State state, ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
+    public Flow(String groupId, Env env, Category category,ExeStrategy exeStrategy, OperatorChain chain, PublishProcessor<FlowMeddleEvent> meddle, ApplicationEventPublisher bus) {
         this.flowId = UUID.randomUUID().toString();
         this.groupId = groupId;
         this.env = env;
+        this.category = category;
         this.exeStrategy = exeStrategy;
-        this.state = new AtomicReference<>(state);
+        this.state = new AtomicReference<>(State.READY);
         this.chain = chain;
         this.meddle = meddle;
         this.bus = bus;

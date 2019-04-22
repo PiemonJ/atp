@@ -25,12 +25,4 @@ public class RuleGroupResourceImpl implements RuleGroupResource {
 
     }
 
-    public Boolean rebuildRuleGroup(RebuildRuleGroupReq req){
-
-        Tuple2<String, Boolean> tuple = ruleGroupApplicationService.rebuildRuleGroup(req);
-
-        return tuple.ok();
-
-    }
-
 }

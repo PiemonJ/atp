@@ -1,5 +1,7 @@
 package com.bytedance.atp.domain.model;
 
+import com.bytedance.atp.common.Category;
+import com.bytedance.atp.domain.model.group.RuleGroupPile;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -34,6 +36,5 @@ public abstract class Entity {
         return other.getId().equals(id); //identifier equality
 
     }
-
 
 }

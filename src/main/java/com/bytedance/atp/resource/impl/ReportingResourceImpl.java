@@ -15,18 +15,18 @@ public class ReportingResourceImpl implements ReportingResource {
     @Autowired
     private ReportingApplicationService reportingApplicationService;
 
-    @Override
-    public List<Reporting> catReportOfRuleGroup(CatReportReq req) {
-
-        String ruleGroupId = req.getRuleGroupId();
-        return reportingApplicationService.catReportOfRuleGroup(ruleGroupId);
-
-    }
-
-    @Override
-    public Reporting catReportOfFlow(CatReportReq req) {
-        String ruleGroupId = req.getRuleGroupId();
-        String flowId = req.getFlowId();
-        return reportingApplicationService.catReportOfFlow(ruleGroupId,flowId);
-    }
+//    @Override
+//    public List<Reporting> catReportOfRuleGroup(CatReportReq req) {
+//
+//        String ruleGroupId = req.getRuleGroupId();
+//        return reportingApplicationService.catReportOfRuleGroup(ruleGroupId);
+//
+//    }
+//
+//    @Override
+//    public Reporting catReportOfFlow(CatReportReq req) {
+//        String ruleGroupId = req.getRuleGroupId();
+//        String flowId = req.getFlowId();
+//        return reportingApplicationService.catReportOfFlow(ruleGroupId,flowId);
+//    }
 }

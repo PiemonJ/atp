@@ -16,9 +16,12 @@ public enum ConfigScalar {
 
     PROJECT_LOCATION(0,"项目工程地址"),
 
+
+
     RELEASE_VALID_DAY(100,"发版合法日"),
 
-    CODE_COVERAGE(1000,"代码覆盖率");
+    CODE_COVERAGE(1000,"代码覆盖率"),
+    CODE_OK_RATE(1001,"测试成功率");
 
     int code;
 

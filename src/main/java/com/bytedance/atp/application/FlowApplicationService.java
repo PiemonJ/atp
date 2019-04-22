@@ -1,9 +1,10 @@
 package com.bytedance.atp.application;
 
+import com.bytedance.atp.common.Category;
 import com.bytedance.atp.core.compiler.Compiler;
 import com.bytedance.atp.domain.model.cc.ConfigCenter;
 import com.bytedance.atp.domain.model.cc.ConfigCenterRepository;
-import com.bytedance.atp.domain.model.common.FlowMeddleEvent;
+import com.bytedance.atp.domain.model.runtime.event.FlowMeddleEvent;
 import com.bytedance.atp.domain.model.group.RuleGroup;
 import com.bytedance.atp.domain.model.group.RuleGroupRepository;
 import com.bytedance.atp.domain.model.runtime.Flow;
@@ -35,25 +36,25 @@ public class FlowApplicationService {
 
         Env env = req.getEnv();
 
-        ExeStrategy exeStrategy = req.getExeStrategy();
+        String gitlab = req.getGitlab();
 
-        String ruleGroupId = req.getRuleGroupId();
-
-        String flowId = req.getFlowId();
+        Category category = req.getCategory();
 
         Direction direction = req.getDirection();
 
+        ExeStrategy exeStrategy = req.getExeStrategy();
+
         String flowID = "";
+
+        RuleGroup ruleGroup = ruleGroupRepository.findByGroupIdentifierGitlab(gitlab);
 
         switch (direction){
 
             case TORUN:
 
-                RuleGroup ruleGroup = ruleGroupRepository.findOne(ruleGroupId);
+                ConfigCenter configCenter = configCenterRepository.findByRuleGroupId(ruleGroup.getId());
 
-                ConfigCenter configCenter = configCenterRepository.findByRuleGroupId(ruleGroupId);
-
-                Flow flow = compiler.compile(env, exeStrategy, ruleGroup, configCenter);
+                Flow flow = compiler.compile(env, category, exeStrategy, ruleGroup, configCenter);
 
                 flowID = flow.getFlowId();
 
@@ -63,7 +64,7 @@ public class FlowApplicationService {
 
             default:
 
-                meddle.onNext(FlowMeddleEvent.apply(ruleGroupId,flowId,direction));
+                meddle.onNext(FlowMeddleEvent.apply(ruleGroup.getId(),flowID,direction));
 
         }
 
