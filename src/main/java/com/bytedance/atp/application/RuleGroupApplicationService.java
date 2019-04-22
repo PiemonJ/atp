@@ -31,20 +31,22 @@ public class RuleGroupApplicationService {
 
         if (group == null){
             //满足幂等
-            RuleGroup ruleGroup = RuleGroupFactory.buildRuleGroup(creator, groupName, gitlab, req.getRules());
+            group = RuleGroupFactory.ruleGroupIniter(creator, groupName, gitlab, req.getRules());
 
-            ruleGroup = ruleGroupRepository.save(ruleGroup);
+            group = ruleGroupRepository.save(group);
 
-            ruleGroup.getEvents().stream().forEach(bus::publishEvent);
+            group.getEvents().stream().forEach(bus::publishEvent);
 
 
-            return Tuple2.apply(String.valueOf(ruleGroup.getId()),true);
+            return Tuple2.apply(String.valueOf(group.getId()),true);
 
         } else {
 
             group.rebuild(req.getRules());
 
             ruleGroupRepository.save(group);
+
+            group.getEvents().stream().forEach(bus::publishEvent);
 
             return Tuple2.apply(group.getId(),true);
         }

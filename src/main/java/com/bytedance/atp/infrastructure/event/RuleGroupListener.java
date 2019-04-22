@@ -5,7 +5,6 @@ import com.bytedance.atp.application.ReportingApplicationService;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.domain.model.group.event.RuleGroupChangedEvent;
 import com.bytedance.atp.domain.model.group.event.RuleGroupCreatedEvent;
-import com.bytedance.atp.domain.model.runtime.event.FlowStartedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;

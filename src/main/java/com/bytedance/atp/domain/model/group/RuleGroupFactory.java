@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class RuleGroupFactory {
 
-    public static RuleGroup buildRuleGroup(String creator,String groupName,String gitlab,List<Rule> rules){
+    public static RuleGroup ruleGroupIniter(String creator,String groupName,String gitlab,List<Rule> rules){
 
 
         GroupIdentifier groupIdentifier = new GroupIdentifier(gitlab);

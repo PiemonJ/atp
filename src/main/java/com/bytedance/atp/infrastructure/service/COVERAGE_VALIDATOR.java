@@ -28,6 +28,6 @@ public class COVERAGE_VALIDATOR implements RuleValidator {
 
     @Override
     public Tuple2 ruleValidate(ConfigPile pile) {
-        return null;
+        return Tuple2.apply(REFERENCE_RULE,true);
     }
 }

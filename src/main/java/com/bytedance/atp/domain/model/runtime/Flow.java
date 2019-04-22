@@ -84,6 +84,14 @@ public class Flow {
     public void run(){
         stateChanger(State.READY,State.RUNNING);
 
+        bus.publishEvent(FlowEventFactory.withStarted(groupId,flowId));
+
+        try {
+            Thread.sleep(10_000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Rule rule = null;
         try {
             OperatorChain.OperatorChainIterator iterator = chain.iterator();
@@ -116,7 +124,7 @@ loop:       while (iterator.hasNext()){
 
                 } else if (state.get() == State.INTERRUPT){
 
-                    bus.publishEvent(FlowEventFactory.withInterrupt(groupId,flowId));
+                    bus.publishEvent(FlowEventFactory.withInterrupted(groupId,flowId));
                     break;
 
                 } else if (state.get() == State.DONE){

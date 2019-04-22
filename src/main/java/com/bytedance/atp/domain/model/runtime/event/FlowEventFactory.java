@@ -5,7 +5,13 @@ import com.bytedance.atp.common.Rule;
 public class FlowEventFactory {
 
 
-    public static FlowInterruptedEvent withInterrupt(String groupId, String flowId){
+    public static FlowStartedEvent withStarted(String groupId, String flowId){
+
+        return new FlowStartedEvent(groupId,flowId);
+    }
+
+
+    public static FlowInterruptedEvent withInterrupted(String groupId, String flowId){
 
         return new FlowInterruptedEvent(groupId,flowId);
     }

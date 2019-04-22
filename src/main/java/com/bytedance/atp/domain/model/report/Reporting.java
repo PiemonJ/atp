@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class Reporting extends AggregateRoot{
 
     public Clock clock;
 
-    public List<Tuple2<Rule,Boolean>> detail;
+    public List<Tuple2<Rule,Boolean>> detail = new ArrayList<>();
 
     public boolean whetherInterrupt;
 
@@ -56,7 +57,7 @@ public class Reporting extends AggregateRoot{
                 whetherInterrupt = true;
                 break;
             case DONE:
-                whetherInterrupt = true;
+                whetherTerminal = true;
                 break;
             case PAUSE:
                 break;

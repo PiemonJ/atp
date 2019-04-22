@@ -92,9 +92,15 @@ public class ConfigCenterFactory {
 
 
         activeConfigers.stream()
-                .forEach(configer ->
-                    all.putIfAbsent(configer.getDescriptor().getScalar(),configer)
-                );
+                .forEach(configer -> {
+                    Configer exist = all.get(configer.getDescriptor().getScalar());
+                    if (exist == null){
+                        all.put(configer.getDescriptor().getScalar(),configer);
+                    } else {
+                        exist.active();
+                    }
+                }
+            );
 
         return new ArrayList<>(all.values());
 

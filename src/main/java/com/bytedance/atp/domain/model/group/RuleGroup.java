@@ -3,6 +3,7 @@ package com.bytedance.atp.domain.model.group;
 import com.bytedance.atp.common.Category;
 import com.bytedance.atp.domain.model.AggregateRoot;
 import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.domain.model.group.event.RuleGroupChangedEvent;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,6 +30,12 @@ public class RuleGroup extends AggregateRoot {
 
     public void rebuild(List<Rule> rules){
 
+
+        this.events.add(
+                new RuleGroupChangedEvent(
+                        groupIdentifier.getGitlab(),
+                        getId(),
+                        rules));
         this.rules = rules;
     }
 

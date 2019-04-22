@@ -15,6 +15,7 @@ public class FlowRuntimeListener {
 
 
     //Spring上下文
+    @Autowired
     public ApplicationEventPublisher bus;
 
 

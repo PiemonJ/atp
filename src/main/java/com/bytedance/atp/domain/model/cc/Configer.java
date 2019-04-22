@@ -47,5 +47,10 @@ public class Configer<T> {
         return this;
     }
 
+    public Configer active(){
+        this.active = true;
+        return this;
+    }
+
 
 }
