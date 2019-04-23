@@ -37,17 +37,6 @@ public class ConfigCenter extends AggregateRoot {
     ConfigTable configTable;
 
 
-    public static Function<Map<ConfigScalar,String>,List<Configer>> mapping = map -> map.entrySet().stream()
-                .map(entry -> Configer.apply(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
-
-    public void configApply(Map<ConfigScalar,String> configers){
-
-        List<Configer> cs = ConfigCenter.mapping.apply(configers);
-
-        configApply(cs);
-    }
 
 
     public void configApply(List<Configer> configers){

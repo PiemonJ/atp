@@ -76,7 +76,7 @@ public class ConfigCenterApplicationService {
 
         } else {
 
-            cc.configApply(defined);
+            cc = ConfigCenterFactory.configCenterDefiner(cc,defined);
 
             configCenterRepository.save(cc);
         }

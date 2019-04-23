@@ -1,11 +1,7 @@
 package com.bytedance.atp.domain.model.cc;
 
 import com.alibaba.fastjson.JSON;
-import com.bytedance.atp.common.DateInterval;
-import com.bytedance.atp.common.Single;
-import com.bytedance.atp.common.Category;
-import com.bytedance.atp.common.ConfigScalar;
-import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.common.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -33,12 +29,13 @@ public class ConfigDescriptor<T> {
 //                    .build();
 
 
-    public static final ConfigDescriptor<Single<DateInterval>> RELEASE_VALID_DAY =
-            ConfigDescriptor.<Single<DateInterval>>builder()
-                    .type(ErasuredType.SINGLE_DATEINTERVAL)
+    public static final ConfigDescriptor<Single<Tuple2<Timer,Timer>>> RELEASE_VALID_DAY =
+            ConfigDescriptor.<Single<Tuple2<Timer,Timer>>>builder()
+                    .type(ErasuredType.SINGLE_TUPLE_TIMER)
                     .scalar(ConfigScalar.RELEASE_VALID_DAY)
                     .categories(Arrays.asList(Category.RELEASE))
                     .referenceRules(Arrays.asList(Rule.WINDOW_PERIOD_RELEASE))
+                    .defaultValue(JSON.toJSONString(Single.of(Tuple2.<Timer,Timer>apply(Timer.TUE_VALID,Timer.TUE_VALID))))
                     .build();
 
 

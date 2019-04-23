@@ -6,26 +6,11 @@ import com.bytedance.atp.common.Rule;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConfigCenterFactory {
-
-    public static ConfigCenter buildConfigCenter(Env env, String ruleGroupId, Map<ConfigScalar,String> configers){
-
-        ConfigCenter cc = new ConfigCenter();
-
-        cc.setId(UUID.randomUUID().toString());
-
-        cc.setVersion(0);
-
-        cc.setRuleGroupId(ruleGroupId);
-
-        cc.configApply(configers);
-
-        return cc;
-
-    }
 
 
     public static ConfigCenter configCenterIniter(String gitlab,String ruleGroupId, List<Rule> rules){
@@ -56,6 +41,38 @@ public class ConfigCenterFactory {
 
         return cc;
 
+
+    }
+
+
+    public static Function<Map<ConfigScalar,String>,List<Configer>> mapping = map -> map.entrySet().stream()
+            .map(entry -> Configer.apply(entry.getKey(), entry.getValue()))
+            .collect(Collectors.toList());
+
+    public static ConfigCenter configCenterDefiner(ConfigCenter cc, Map<ConfigScalar,String> defined){
+
+
+        List<Configer> definedConfigers = mapping.apply(defined);
+
+        List<Configer> allConfigers = cc.obtainAllConfiger();
+
+        List<Configer> activeConfigers = cc.obtainAllActiveConfiger();
+
+        ConcurrentMap<ConfigScalar, Configer> activeMap = activeConfigers.parallelStream()
+                .collect(Collectors.toConcurrentMap(configer -> configer.getDescriptor().getScalar(), configer -> configer));
+
+        definedConfigers.stream()
+                .forEach(
+                        definedConfiger ->
+                            activeMap.put(definedConfiger.getDescriptor().getScalar(),definedConfiger)
+
+                );
+
+        List<Configer> mixedActiveConfigers = new ArrayList<>(activeMap.values());
+
+        cc.configApply(mixin(allConfigers,mixedActiveConfigers));
+
+        return cc;
 
     }
 
