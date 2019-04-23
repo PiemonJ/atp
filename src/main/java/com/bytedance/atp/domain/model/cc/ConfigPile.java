@@ -21,6 +21,8 @@ public class ConfigPile {
 
     public String ruleGroupId;
 
+    public String gitlab;
+
     public Rule rule;
 
     public Map<ConfigDescriptor,Configer> configers;

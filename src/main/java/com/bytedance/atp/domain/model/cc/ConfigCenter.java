@@ -107,6 +107,7 @@ public class ConfigCenter extends AggregateRoot {
         }
 
         return ConfigPile.builder()
+                .gitlab(gitlab)
                 .rule(rule)
                 .ruleGroupId(ruleGroupId)
                 .configers(configers)
