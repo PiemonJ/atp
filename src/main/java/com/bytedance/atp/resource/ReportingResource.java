@@ -12,18 +12,12 @@ import java.util.List;
 @RequestMapping(value = "/report")
 public interface ReportingResource {
 
-//    @RequestMapping(method = RequestMethod.GET,
-//            value = "/cat",
-//            consumes = "application/json",
-//            produces = "application/json"
-//    )
-//    public List<Reporting> catReportOfRuleGroup(CatReportReq req);
 
 
-//    @RequestMapping(method = RequestMethod.GET,
-//            value = "/cat",
-//            consumes = "application/json",
-//            produces = "application/json"
-//    )
-//    public Reporting catReportOfFlow(CatReportReq req);
+    @RequestMapping(method = RequestMethod.GET,
+            value = "/cat",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public Reporting catReportOfFlow(CatReportReq req);
 }

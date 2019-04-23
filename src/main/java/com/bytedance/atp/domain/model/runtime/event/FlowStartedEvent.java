@@ -1,5 +1,6 @@
 package com.bytedance.atp.domain.model.runtime.event;
 
+import com.bytedance.atp.common.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,10 +8,11 @@ import lombok.Setter;
 @Getter
 public class FlowStartedEvent extends FlowEvent {
 
-    public FlowStartedEvent() {
+
+    public FlowStartedEvent(String ruleGroupId, String flowId, Category category) {
+        super(ruleGroupId, flowId, category);
     }
 
-    public FlowStartedEvent(String ruleGroupId, String flowId) {
-        super(ruleGroupId, flowId);
+    public FlowStartedEvent() {
     }
 }

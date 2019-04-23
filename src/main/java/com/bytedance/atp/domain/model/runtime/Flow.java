@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.annotation.Transient;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -22,6 +24,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @Getter
 @NoArgsConstructor
 public class Flow {
+
+    public ExecutorService pool = Executors.newCachedThreadPool();
+
 
     public String flowId;
 
@@ -70,6 +75,12 @@ public class Flow {
 
     }
 
+    public void asyncRun(){
+
+        pool.submit(() -> run());
+    }
+
+
     /**
      * 将执行的逻辑，委派到状态上
      *
@@ -84,7 +95,7 @@ public class Flow {
     public void run(){
         stateChanger(State.READY,State.RUNNING);
 
-        bus.publishEvent(FlowEventFactory.withStarted(groupId,flowId));
+        bus.publishEvent(FlowEventFactory.withStarted(groupId,flowId,category));
 
         try {
             Thread.sleep(10_000);
@@ -105,7 +116,7 @@ loop:       while (iterator.hasNext()){
 
                     if (!operator.action().ok()){
 
-                        bus.publishEvent(FlowEventFactory.withNonMatched(groupId,flowId,rule));
+                        bus.publishEvent(FlowEventFactory.withNonMatched(groupId,flowId,rule,category));
 
                         switch (exeStrategy){
                             case FAIL_FAST:
@@ -115,7 +126,7 @@ loop:       while (iterator.hasNext()){
                         }
                     } else {
 
-                        bus.publishEvent(FlowEventFactory.withMatched(groupId,flowId,rule));
+                        bus.publishEvent(FlowEventFactory.withMatched(groupId,flowId,rule,category));
 
                     }
                 } else if (state.get() == State.PAUSE){
@@ -124,7 +135,7 @@ loop:       while (iterator.hasNext()){
 
                 } else if (state.get() == State.INTERRUPT){
 
-                    bus.publishEvent(FlowEventFactory.withInterrupted(groupId,flowId));
+                    bus.publishEvent(FlowEventFactory.withInterrupted(groupId,flowId,category));
                     break;
 
                 } else if (state.get() == State.DONE){
@@ -144,13 +155,13 @@ loop:       while (iterator.hasNext()){
 
         } catch (Exception e){
 
-            bus.publishEvent(FlowEventFactory.withTraped(groupId,flowId,rule));
+            bus.publishEvent(FlowEventFactory.withTraped(groupId,flowId,rule,category));
 
             log.info(e.getMessage());
 
         } finally {
 
-            bus.publishEvent(FlowEventFactory.withTerminal(groupId,flowId));
+            bus.publishEvent(FlowEventFactory.withTerminal(groupId,flowId,category));
 
             disposable.dispose();
         }

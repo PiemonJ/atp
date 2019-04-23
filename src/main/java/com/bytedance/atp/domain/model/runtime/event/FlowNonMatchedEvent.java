@@ -1,5 +1,6 @@
 package com.bytedance.atp.domain.model.runtime.event;
 
+import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Rule;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +11,12 @@ public class FlowNonMatchedEvent extends FlowEvent {
 
     public Rule rule;
 
-    public FlowNonMatchedEvent() {
+    public FlowNonMatchedEvent(String ruleGroupId, String flowId, Category category, Rule rule) {
+        super(ruleGroupId, flowId, category);
+        this.rule = rule;
     }
 
-    public FlowNonMatchedEvent(String ruleGroupId, String flowId, Rule rule) {
-        super(ruleGroupId, flowId);
+    public FlowNonMatchedEvent(Rule rule) {
         this.rule = rule;
     }
 }

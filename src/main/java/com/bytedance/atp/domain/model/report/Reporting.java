@@ -1,9 +1,11 @@
 package com.bytedance.atp.domain.model.report;
 
+import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.State;
 import com.bytedance.atp.domain.model.AggregateRoot;
 import com.bytedance.atp.common.Tuple2;
 import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.domain.model.report.event.ReportingTerminatedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,6 +26,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reporting extends AggregateRoot{
+
+    public Category category;
 
     public String ruleGroupId;
 
@@ -57,7 +62,10 @@ public class Reporting extends AggregateRoot{
                 whetherInterrupt = true;
                 break;
             case DONE:
+                clock.setFlowTerminal(Calendar.getInstance().getTime());
                 whetherTerminal = true;
+                ReportingTerminatedEvent event = new ReportingTerminatedEvent(ruleGroupId,flowId,category);
+                events.add(event);
                 break;
             case PAUSE:
                 break;

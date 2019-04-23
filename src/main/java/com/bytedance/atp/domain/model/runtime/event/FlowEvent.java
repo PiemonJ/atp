@@ -1,5 +1,6 @@
 package com.bytedance.atp.domain.model.runtime.event;
 
+import com.bytedance.atp.common.Category;
 import lombok.*;
 
 @Data
@@ -11,6 +12,8 @@ public class FlowEvent {
     public String ruleGroupId;
 
     public String flowId;
+
+    public Category category;
 
 
 

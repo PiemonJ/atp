@@ -1,6 +1,7 @@
 package com.bytedance.atp.infrastructure.event;
 
 import com.bytedance.atp.application.ReportingApplicationService;
+import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.State;
 import com.bytedance.atp.domain.model.runtime.event.*;
@@ -28,8 +29,9 @@ public class FlowRuntimeListener {
         //Invoke Report Rich Method
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
+        Category category = event.getCategory();
 
-        reportingApplicationService.initReport(ruleGroupId,flowId);
+        reportingApplicationService.initReport(ruleGroupId,flowId,category);
 
 
     }

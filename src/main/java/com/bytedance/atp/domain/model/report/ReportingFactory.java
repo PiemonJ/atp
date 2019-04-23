@@ -1,11 +1,13 @@
 package com.bytedance.atp.domain.model.report;
 
+import com.bytedance.atp.common.Category;
+
 import java.util.Calendar;
 import java.util.UUID;
 
 public class ReportingFactory {
 
-    public static Reporting buildReporting(String ruleGroupId,String flowId){
+    public static Reporting buildReporting(String ruleGroupId, String flowId, Category category){
 
         Reporting reporting = new Reporting();
 
@@ -16,6 +18,8 @@ public class ReportingFactory {
         reporting.setId(UUID.randomUUID().toString());
         reporting.setRuleGroupId(ruleGroupId);
         reporting.setFlowId(flowId);
+
+        reporting.setCategory(category);
 
         reporting.setClock(clock);
 
