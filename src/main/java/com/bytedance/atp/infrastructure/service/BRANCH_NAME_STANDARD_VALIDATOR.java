@@ -47,7 +47,7 @@ public class BRANCH_NAME_STANDARD_VALIDATOR implements RuleValidator {
 
         boolean matched = true;
 
-        return new VerificationReport(REFERENCE_RULE, single.value.toString(), BigDecimal.TEN.toString() , matched);
+        return new VerificationReport(REFERENCE_RULE, single.value.toString(), BigDecimal.TEN.toString() , "分支名不符合命名规范", matched);
 
     }
 }

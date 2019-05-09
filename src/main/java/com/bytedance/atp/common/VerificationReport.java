@@ -20,6 +20,8 @@ public class VerificationReport {
 
     public String actual;
 
+    public String display;
+
     public boolean ok;
 
     public boolean ok(){

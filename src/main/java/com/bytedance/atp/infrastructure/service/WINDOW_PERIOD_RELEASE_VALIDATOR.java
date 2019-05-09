@@ -54,7 +54,7 @@ public class WINDOW_PERIOD_RELEASE_VALIDATOR implements RuleValidator {
 
         String actual = now.getTime().toString();
 
-        return new VerificationReport(REFERENCE_RULE,expect,actual,result);
+        return new VerificationReport(REFERENCE_RULE,expect,actual,"非窗口期发布",result);
 
     }
 
