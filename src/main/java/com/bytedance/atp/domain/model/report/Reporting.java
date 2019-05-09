@@ -1,10 +1,7 @@
 package com.bytedance.atp.domain.model.report;
 
-import com.bytedance.atp.common.Category;
-import com.bytedance.atp.common.State;
+import com.bytedance.atp.common.*;
 import com.bytedance.atp.domain.model.AggregateRoot;
-import com.bytedance.atp.common.Tuple2;
-import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.domain.model.report.event.ReportingTerminatedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,7 +32,7 @@ public class Reporting extends AggregateRoot{
 
     public Clock clock;
 
-    public List<Tuple2<Rule,Boolean>> detail = new ArrayList<>();
+    public List<VerificationReport> detail = new ArrayList<>();
 
     public boolean whetherInterrupt;
 
@@ -49,13 +46,13 @@ public class Reporting extends AggregateRoot{
     }
 
 
-    public void rich(Rule rule,State state,boolean whetherMatched){
+    public void rich(VerificationReport vp,State state){
         switch (state){
             case RUNNING:
-                detail.add(Tuple2.apply(rule,whetherMatched));
+                detail.add(vp);
                 break;
             case TRAP:
-                detail.add(Tuple2.apply(rule,false));
+                detail.add(vp);
                 whetherTrap = true;
                 break;
             case INTERRUPT:

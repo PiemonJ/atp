@@ -1,9 +1,6 @@
 package com.bytedance.atp.infrastructure.service;
 
-import com.bytedance.atp.common.DateInterval;
-import com.bytedance.atp.common.Rule;
-import com.bytedance.atp.common.Single;
-import com.bytedance.atp.common.Tuple2;
+import com.bytedance.atp.common.*;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigDescriptor;
 import com.bytedance.atp.domain.model.cc.ConfigPile;
@@ -39,7 +36,7 @@ public class BRANCH_NAME_STANDARD_VALIDATOR implements RuleValidator {
     }
 
     @Override
-    public Tuple2<Rule, Boolean> ruleValidate(ConfigPile pile) {
+    public VerificationReport ruleValidate(ConfigPile pile) {
 
 
         Configer<Single<BigDecimal>> configer = pile.obtain(ConfigDescriptor.CODE_OK_RATE);
@@ -50,7 +47,7 @@ public class BRANCH_NAME_STANDARD_VALIDATOR implements RuleValidator {
 
         boolean matched = true;
 
-        return Tuple2.apply(REFERENCE_RULE, matched);
+        return new VerificationReport(REFERENCE_RULE, single.value.toString(), BigDecimal.TEN.toString() , matched);
 
     }
 }

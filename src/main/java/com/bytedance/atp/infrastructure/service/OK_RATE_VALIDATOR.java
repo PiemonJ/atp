@@ -2,6 +2,7 @@ package com.bytedance.atp.infrastructure.service;
 
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.Tuple2;
+import com.bytedance.atp.common.VerificationReport;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigPile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class OK_RATE_VALIDATOR implements RuleValidator {
     }
 
     @Override
-    public Tuple2 ruleValidate(ConfigPile pile) {
-        return Tuple2.apply(REFERENCE_RULE,true);
+    public VerificationReport ruleValidate(ConfigPile pile) {
+        return new VerificationReport();
     }
 }

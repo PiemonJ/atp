@@ -2,6 +2,7 @@ package com.bytedance.atp.domain.model.runtime.event;
 
 import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Rule;
+import com.bytedance.atp.common.VerificationReport;
 
 public class FlowEventFactory {
 
@@ -17,14 +18,14 @@ public class FlowEventFactory {
         return new FlowInterruptedEvent(groupId,flowId,category);
     }
 
-    public static FlowMatchedEvent withMatched(String groupId, String flowId, Rule rule, Category category){
+    public static FlowMatchedEvent withMatched(String groupId, String flowId, VerificationReport vp, Category category){
 
-        return new FlowMatchedEvent(groupId,flowId,category,rule);
+        return new FlowMatchedEvent(groupId,flowId,category,vp);
     }
 
-    public static FlowNonMatchedEvent withNonMatched(String groupId, String flowId, Rule rule, Category category){
+    public static FlowNonMatchedEvent withNonMatched(String groupId, String flowId,VerificationReport vp, Category category){
 
-        return new FlowNonMatchedEvent(groupId,flowId,category,rule);
+        return new FlowNonMatchedEvent(groupId,flowId,category,vp);
 
     }
 

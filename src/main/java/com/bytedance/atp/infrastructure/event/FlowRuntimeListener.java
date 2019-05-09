@@ -4,6 +4,7 @@ import com.bytedance.atp.application.ReportingApplicationService;
 import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.State;
+import com.bytedance.atp.common.VerificationReport;
 import com.bytedance.atp.domain.model.runtime.event.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -44,7 +45,7 @@ public class FlowRuntimeListener {
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
 
-        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.INTERRUPT, null,null);
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.INTERRUPT,null);
 
         if (!ok)
             bus.publishEvent(event);
@@ -62,7 +63,7 @@ public class FlowRuntimeListener {
 
         Rule rule = event.getRule();
 
-        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.TRAP, rule,null);
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.TRAP,null);
 
         if (!ok)
             bus.publishEvent(event);
@@ -77,9 +78,9 @@ public class FlowRuntimeListener {
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
 
-        Rule rule = event.getRule();
+        VerificationReport vp = event.getVp();
 
-        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, rule,true);
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, vp);
 
         if (!ok)
             bus.publishEvent(event);
@@ -93,9 +94,9 @@ public class FlowRuntimeListener {
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
 
-        Rule rule = event.getRule();
+        VerificationReport vp = event.getVp();
 
-        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, rule,false);
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.RUNNING, vp);
 
         if (!ok)
             bus.publishEvent(event);
@@ -108,7 +109,7 @@ public class FlowRuntimeListener {
         String flowId = event.getFlowId();
         String ruleGroupId = event.getRuleGroupId();
 
-        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.DONE, null,false);
+        Boolean ok = reportingApplicationService.richReport(ruleGroupId, flowId, State.DONE, null);
 
         if (!ok)
             bus.publishEvent(event);

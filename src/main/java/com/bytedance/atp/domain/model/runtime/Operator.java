@@ -1,5 +1,6 @@
 package com.bytedance.atp.domain.model.runtime;
 
+import com.bytedance.atp.common.VerificationReport;
 import com.bytedance.atp.core.validator.RuleValidator;
 import com.bytedance.atp.domain.model.cc.ConfigPile;
 import com.bytedance.atp.common.Tuple2;
@@ -44,7 +45,7 @@ public class Operator {
         this.next = Optional.empty();
     }
 
-    public Tuple2<Object,Boolean> action() {
+    public VerificationReport action() {
 
         return validator.ruleValidate(pile);
 

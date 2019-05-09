@@ -32,7 +32,7 @@ public class WINDOW_PERIOD_RELEASE_VALIDATOR implements RuleValidator {
     }
 
     @Override
-    public Tuple2<Rule, Boolean> ruleValidate(ConfigPile pile) {
+    public VerificationReport ruleValidate(ConfigPile pile) {
 
         Calendar now = Calendar.getInstance();
 
@@ -49,7 +49,12 @@ public class WINDOW_PERIOD_RELEASE_VALIDATOR implements RuleValidator {
         boolean result = (timers._1.weekday.code == week && hour >= timers._1.from && hour < timers._1.to)
                             ||
                          (timers._2.weekday.code == week && hour >= timers._2.from && hour < timers._2.to);
-        return Tuple2.apply(REFERENCE_RULE,result);
+
+        String expect = Timer.putty(timers._1, timers._2);
+
+        String actual = now.getTime().toString();
+
+        return new VerificationReport(REFERENCE_RULE,expect,actual,result);
 
     }
 

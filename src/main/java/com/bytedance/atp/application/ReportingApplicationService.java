@@ -3,6 +3,7 @@ package com.bytedance.atp.application;
 import com.bytedance.atp.common.Category;
 import com.bytedance.atp.common.Rule;
 import com.bytedance.atp.common.State;
+import com.bytedance.atp.common.VerificationReport;
 import com.bytedance.atp.domain.model.report.Reporting;
 import com.bytedance.atp.domain.model.report.ReportingFactory;
 import com.bytedance.atp.domain.model.report.ReportingRepository;
@@ -21,7 +22,7 @@ public class ReportingApplicationService {
     /**
      * 生成报告
      */
-    public Boolean richReport(String ruleGroupId, String flowId, State state, Rule rule,Boolean whetherMatched){
+    public Boolean richReport(String ruleGroupId, String flowId, State state, VerificationReport vp){
 
 
         Reporting reporting = reportingRepository.findByRuleGroupIdAndFlowId(ruleGroupId, flowId);
@@ -32,7 +33,7 @@ public class ReportingApplicationService {
             return false;
         }
 
-        reporting.rich(rule,state,whetherMatched);
+        reporting.rich(vp,state);
         reporting.events.stream().forEach(bus::publishEvent);
         reportingRepository.save(reporting);
 

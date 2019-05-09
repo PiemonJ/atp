@@ -15,6 +15,4 @@ public class FlowEvent {
 
     public Category category;
 
-
-
 }

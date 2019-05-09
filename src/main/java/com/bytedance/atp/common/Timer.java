@@ -21,4 +21,10 @@ public class Timer {
 
     public static final Timer THU_VALID = new Timer(Weekday.THU,20,24);
 
+    public static String putty(Timer t1,Timer t2){
+        return t1.getWeekday().getDesc() + "[" + t1.getFrom() + "~" + t1.getTo() + "]"
+                + "-----"
+                + t2.getWeekday().getDesc() + "[" + t2.getFrom() + "~" + t2.getTo() + "]";
+    }
+
 }

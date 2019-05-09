@@ -112,11 +112,13 @@ loop:       while (iterator.hasNext()){
 
                     Operator operator = iterator.next();
 
+                    VerificationReport vp = operator.action();
+
                     rule = operator.getRule();
 
-                    if (!operator.action().ok()){
+                    if (!vp.ok()){
 
-                        bus.publishEvent(FlowEventFactory.withNonMatched(groupId,flowId,rule,category));
+                        bus.publishEvent(FlowEventFactory.withNonMatched(groupId,flowId,vp,category));
 
                         switch (exeStrategy){
                             case FAIL_FAST:
@@ -126,7 +128,7 @@ loop:       while (iterator.hasNext()){
                         }
                     } else {
 
-                        bus.publishEvent(FlowEventFactory.withMatched(groupId,flowId,rule,category));
+                        bus.publishEvent(FlowEventFactory.withMatched(groupId,flowId,vp,category));
 
                     }
                 } else if (state.get() == State.PAUSE){
