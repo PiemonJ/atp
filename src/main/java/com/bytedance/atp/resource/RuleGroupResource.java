@@ -2,8 +2,10 @@ package com.bytedance.atp.resource;
 
 import com.bytedance.atp.application.RuleGroupApplicationService;
 import com.bytedance.atp.share.req.BuildRuleGroupReq;
+import com.bytedance.atp.share.req.ObtainRuleGroupReq;
 import com.bytedance.atp.share.req.RebuildRuleGroupReq;
 import com.bytedance.atp.share.resp.BuildRuleGroupResp;
+import com.bytedance.atp.share.resp.ObtainRuleGroupResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,5 +31,7 @@ public interface RuleGroupResource {
 //            produces = "application/json"
 //    )
 //    public Boolean rebuildRuleGroup(RebuildRuleGroupReq req);
+
+    public ObtainRuleGroupResp obtainRuleGroup(ObtainRuleGroupReq obtainRuleGroupReq);
 
 }

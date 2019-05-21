@@ -54,4 +54,10 @@ public class RuleGroupApplicationService {
 
     }
 
+    public RuleGroup obtainRuleGroup(String gitlab) {
+
+        RuleGroup ruleGroup = ruleGroupRepository.findByGroupIdentifierGitlab(gitlab);
+
+        return ruleGroup;
+    }
 }
